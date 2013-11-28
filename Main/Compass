@@ -1,0 +1,144 @@
+package de.GamerWorld.SM.Main;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+public class Compass implements CommandExecutor, Listener{
+
+	private Main plugin;	
+	private Inventory inv = null;	
+	
+	public Compass (Main plugin) {
+		this.plugin = plugin;
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label,String[] args) {
+		if (!(cs instanceof Player)) {
+			cs.sendMessage("§cYou must be an player to open inventorys");
+		}
+		if (cmd.getName().equalsIgnoreCase("com") || cmd.getName().equalsIgnoreCase("compass")) {
+		Player p = (Player)cs;	
+		
+		
+		if (args[0].equalsIgnoreCase("open") || args[0].equalsIgnoreCase("o")) {
+    		if (p.hasPermission("sm.kompass")) {
+    			if (plugin.getConfig().getBoolean("Config.Teleport.Compass activated?")) {
+    				File file = new File("plugins/ServerManager/Teleportation", "compass.yml");
+    				FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);			
+    				String KomName = cfg.getString("Compass.default.Name");
+    				KomName = ChatColor.translateAlternateColorCodes('&', cfg.getString("Compass.default.Name"));
+    				inv = p.getPlayer().getServer().createInventory(null, 27, KomName);
+    				
+    	        			String KomHub = cfg.getString("Compass.Teleportpoints.Hub.Name");
+    	        			KomHub = ChatColor.translateAlternateColorCodes('&', cfg.getString("Compass.Teleportpoints.Hub.Name"));
+    	        			
+    	        			String KomLoreHub = cfg.getString("Compass.Teleportpoints.Hub.Lore");
+    	        			KomLoreHub = ChatColor.translateAlternateColorCodes('&', KomLoreHub);
+    	        			
+    	        			String KomHoF = cfg.getString("Compass.Teleportpoints.Hall of Fame.Name");
+    	        			KomHoF = ChatColor.translateAlternateColorCodes('&', KomHoF);
+    	        			
+    	        			String KomLoreHoF = cfg.getString("Compass.Teleportpoints.Hall of Fame.Lore");
+    	        			KomLoreHoF = ChatColor.translateAlternateColorCodes('&', KomLoreHoF);
+    	        			
+    						//Leerstellen füllen
+    	        			ItemStack istack = new ItemStack(Material.SIGN_POST);
+    	        			ItemMeta istackmeta = istack.getItemMeta();        			
+    	        			istackmeta.setDisplayName(" ");
+    	        			istack.setItemMeta(istackmeta);
+    	        			
+    	        			//Hub
+    	        			ItemStack istackHub = new ItemStack(Material.SLIME_BALL);
+    	        			ItemMeta istackmetaHub = istack.getItemMeta();        			
+    	        			istackmetaHub.setDisplayName(KomHub);
+    	        			ArrayList<String> lore1 = new ArrayList<String>();
+    	        			lore1.add(KomLoreHub);
+    	        			istackmetaHub.setLore(lore1);
+    	        			istackHub.setItemMeta(istackmetaHub);
+    	        			
+    	        			//Hall of Fame
+    	        			ItemStack istackHoF = new ItemStack(Material.DIAMOND_BLOCK);
+    	        			ItemMeta istackmetaHoF = istackHoF.getItemMeta();        			
+    	        			istackmetaHoF.setDisplayName(KomHoF);
+    	        			ArrayList<String> lore2 = new ArrayList<String>();
+    	        			lore1.add(KomLoreHoF);
+    	        			istackmetaHoF.setLore(lore2);
+    	        			istackHoF.setItemMeta(istackmetaHoF);
+    	        			
+    	        			if (cfg.getBoolean("Compass.default.Fill empty fields?")) {
+    	        				inv.setItem(0, istack);
+    	        				inv.setItem(1, istack);
+    	        				inv.setItem(2, istack);
+    	        				inv.setItem(3, istack);
+    	        				inv.setItem(4, istack);
+    	        				inv.setItem(5, istack);
+    	        				inv.setItem(6, istack);
+    	        				inv.setItem(7, istack);
+    	        				inv.setItem(8, istack);
+    	        				inv.setItem(9, istack);
+    	        				inv.setItem(11, istack);
+    	        				inv.setItem(13, istack);
+    	        				inv.setItem(14, istack);
+    	        				inv.setItem(15, istack);
+    	        				inv.setItem(16, istack);
+    	        				inv.setItem(17, istack);
+    	        				inv.setItem(18, istack);
+    	        				inv.setItem(19, istack);
+    	        				inv.setItem(20, istack);
+    	        				inv.setItem(21, istack);
+    	        				inv.setItem(22, istack);
+    	        				inv.setItem(23, istack);
+    	        				inv.setItem(24, istack);
+    	        				inv.setItem(25, istack);
+    	        				inv.setItem(26, istack);
+    	        				
+    	        			}
+    	        			if (cfg.getBoolean("Compass.Teleportpoints.Hub.activated?")) {
+    	        				inv.setItem(10, istackHub);
+    	        			}else{
+    	        				inv.setItem(10, istack);
+    	        			}			    	        			
+    	        			if (cfg.getBoolean("Compass.Teleportpoints.Hall of Fame.activated?")) {
+    	        				 inv.setItem(12, istackHoF);
+    	        			}else{
+    	        				inv.setItem(12, istack);
+    	        			}
+    	        			
+    	        			p.getPlayer().openInventory(inv);
+    	        			
+    	        		
+    	        		}else{
+    	        			File file = new File("plugins/ServerManager", "messages.yml");
+    	        			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+    	        			String Komdeak = cfg.getString("messages.Teleport.Kompass deactivated");
+    	        			Komdeak = ChatColor.translateAlternateColorCodes('&', Komdeak);
+    	        			p.sendMessage("§4[§1SM§4]: " + Komdeak);
+    	        		}
+    	        		}else{
+    	        			File filem = new File("plugins/ServerManager", "messages.yml");
+    	        			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+    	        			String KeineRechte = cfgm.getString("messages.default.no permissions");
+    	        			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.no permissions"));
+    	        			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    	        			 
+    	        		}
+			}
+    	}
+		return false;
+	}
+
+}

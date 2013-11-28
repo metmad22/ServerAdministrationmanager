@@ -1,0 +1,106 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class gamemodeCommand implements CommandExecutor
+{
+	  Main plugin;
+
+	  public gamemodeCommand(Main plugin)
+	  {
+	    this.plugin = plugin;
+	  }
+	  
+	  File filem = new File("plugins/ServerManager", "messages.yml");
+	  FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+
+	  @Override
+	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	  {
+		    if (cmd.getName().equalsIgnoreCase("gamemode")) {
+		        Player p = (Player)sender;
+		        if (!p.hasPermission("sm.gamemode")) {
+		        	p.sendMessage(Main.prefix + Main.KeineRechte);
+		        	return true;
+		        }
+		        if ((sender instanceof Player) && (args.length == 2)) {
+		          if (Bukkit.getPlayer(args[1]) != null) {
+		            Player target = Bukkit.getPlayer(args[1]);
+		            if (args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
+		            	if(!target.getGameMode().equals(GameMode.SURVIVAL)) {
+		            		target.setGameMode(GameMode.SURVIVAL);
+			          		  String gmc = cfgm.getString("messages.Gamemode.Change");
+			          		  gmc = ChatColor.translateAlternateColorCodes('&', gmc);
+			          		  gmc = gmc.replace("%gamemode%", "SURVIVAL");
+		            		target.sendMessage(Main.prefixb + gmc);
+		            		  String gmco = cfgm.getString("messages.Gamemode.Change other");
+		            		  gmco = ChatColor.translateAlternateColorCodes('&', gmco);
+		            		  gmco = gmco.replace("%gamemode%", "SURVIVAL");
+		            		  gmco = gmco.replace("%player%", target.getName());
+		            		p.sendMessage(Main.prefix + gmco);
+		            	}else{
+		            		String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+		            		Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+		            		Isan = Isan.replace("%gamemode%", "SURVIVAL");
+		            		p.sendMessage(Main.prefixb + Isan);
+		            		
+		            	}
+		            } else if (args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creativ")) {
+		            	if (!target.getGameMode().equals(GameMode.CREATIVE)) {
+		            		target.setGameMode(GameMode.CREATIVE);
+			          		  String gmc = cfgm.getString("messages.Gamemode.Change");
+			          		  gmc = ChatColor.translateAlternateColorCodes('&', gmc);
+			          		  gmc = gmc.replace("%gamemode%", "CREATIV");
+		            		target.sendMessage(Main.prefixb + gmc);
+		            		  String gmco = cfgm.getString("messages.Gamemode.Change other");
+		            		  gmco = ChatColor.translateAlternateColorCodes('&', gmco);
+		            		  gmco = gmco.replace("%gamemode%", "CREATIV");
+		            		  gmco = gmco.replace("%player%", target.getName());
+		            		p.sendMessage(Main.prefix + gmco);
+		            	}else{
+		            		String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+		            		Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+		            		Isan = Isan.replace("%gamemode%", "CREATIV");
+		            		p.sendMessage(Main.prefixb + Isan);
+		            		
+		            	}
+		            } else if (args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
+		            	if (!target.getGameMode().equals(GameMode.ADVENTURE)) {
+		            		target.setGameMode(GameMode.ADVENTURE);
+			          		  String gmc = cfgm.getString("messages.Gamemode.Change");
+			          		  gmc = ChatColor.translateAlternateColorCodes('&', gmc);
+			          		  gmc = gmc.replace("%gamemode%", "ADVENTURE");
+		            		target.sendMessage(Main.prefixb + gmc);
+		            		  String gmco = cfgm.getString("messages.Gamemode.Change other");
+		            		  gmco = ChatColor.translateAlternateColorCodes('&', gmco);
+		            		  gmco = gmco.replace("%gamemode%", "ADVENTURE");
+		            		  gmco = gmco.replace("%player%", target.getName());
+		            		p.sendMessage(Main.prefix + gmco);
+		            	}else{
+		            		String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+		            		Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+		            		Isan = Isan.replace("%gamemode%", "ADVENTURE");
+		            		p.sendMessage(Main.prefixb + Isan);
+		            		
+		            	}
+		            }
+		            return true;
+		          }
+		          sender.sendMessage(Main.prefixb + Main.Playerdnx);
+		        }
+		    }		    
+			return true;
+	  	}
+	}

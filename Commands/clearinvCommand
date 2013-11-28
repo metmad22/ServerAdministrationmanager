@@ -1,0 +1,58 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+public class clearinvCommand implements CommandExecutor {
+	
+	private String pnichtonline;
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("clearinv")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+	    		if (p.hasPermission("sm.clearInv")) {
+		    		if (args.length == 0) {
+			    		String Invgeleert = cfg.getString("messages.Inventory.Inventory cleared");
+			    		Invgeleert = ChatColor.translateAlternateColorCodes('&', Invgeleert);
+		    			p.sendMessage("§4[§1SM§4]: " + Invgeleert);
+		    			p.getInventory().clear();
+		    		}
+	    			if (args.length == 1) {
+		    			if (Bukkit.getPlayer(args[0]) != null) {
+		    		          Player target = Bukkit.getPlayer(args[0]);
+		    		          if (target.isOnline()) {
+		    		        	String Invgeleert = cfg.getString("messages.Inventory.Inventory cleared");
+		    			    	Invgeleert = ChatColor.translateAlternateColorCodes('&', Invgeleert);
+		    		        	target.sendMessage("§4[§1SM§4]: " + Invgeleert);
+		    		            target.getInventory().clear();
+		    		          } else {
+		    		            p.sendMessage("§4[§1SM§4]: " + pnichtonline);
+		    		          }
+		    			}
+		    		}
+	    		}else{
+    			String KeineRechte = cfg.getString("messages.default.no permissions");
+    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    		}
+
+	    		
+	    		pnichtonline = cfg.getString("messages.Inventory.Player not online");
+	    		pnichtonline = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.Inventory.Player not online"));
+    	}
+		return true;
+		
+	}
+
+}

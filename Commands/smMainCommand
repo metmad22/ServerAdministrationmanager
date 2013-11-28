@@ -1,0 +1,49 @@
+package de.GamerWorld.SM.Commands;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class smMainCommand implements CommandExecutor{
+	
+	Main plugin;
+	
+	public smMainCommand(Main plugin) {
+		this.plugin = plugin;
+	}
+
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("sminfo")) {
+		    Player p = (Player)cs;
+			if (args.length == 0) {
+	            PluginDescriptionFile pdf = plugin.getDescription();
+	        	String version = pdf.getVersion();  
+		    	p.sendMessage("§6-*-§9[ServerManager]§6-*-");
+	            p.sendMessage(" ");
+	            p.sendMessage("§2Author: §aMineraftair + metmad22");
+	            p.sendMessage("§2Plugin type: §aAdmintools, Fun, Teleportation");
+	            p.sendMessage("§2Version: §a" + version);
+	            p.sendMessage("§2DevBukkit Link:");
+	            p.sendMessage("§ahttp://dev.bukkit.org/bukkit-plugins/manage-your-server/");
+	            p.sendMessage("§6For more help: /sminfo help");
+		    }
+		    if (args.length == 1) {
+		    	if (args[0].equalsIgnoreCase("help")) {
+		    		p.sendMessage("§6-*-§9[ServerManagerHelp]§6-*-");
+		            p.sendMessage("");
+		            p.sendMessage("§2/sm - §aOpen Maininfos about the plugin.");
+		            p.sendMessage("§6For all Commands visite:");
+		            p.sendMessage("§6http://dev.bukkit.org/bukkit-plugins/manage-your-server/");
+		            p.sendMessage("§cThis will be changed in the next update!");
+		            }
+		    }
+		}
+		return false;
+	}
+
+}

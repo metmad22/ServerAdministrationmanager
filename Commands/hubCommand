@@ -1,0 +1,66 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+
+public class hubCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cs instanceof Player) {
+		if (cmd.getName().equalsIgnoreCase("hub")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(file);
+    		if (p.hasPermission("sm.hub")) {
+    			if (args.length == 0) {
+	    			File fileh = new File("plugins/ServerManager/Teleportation/Other Points", "hub.yml");
+	    			if (!(fileh.exists())) {
+	    				p.sendMessage("§4[§1SM§4]: WARNING! PROBLEM WITH THIS PLUGIN! hub.yml DOES NOT EXIST!");
+	    				p.sendMessage("§4[§1SM§4]: Please contact the Serverowner to solve this problem!");
+	    			}else{
+	   			     	 FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileh);
+	    				 String w = cfg.getString("Location.world");
+	    	         	 double x = cfg.getDouble("Location.X");
+	    	         	 double y = cfg.getDouble("Location.Y");
+	    	         	 double z = cfg.getDouble("Location.Z");
+	    	         	 double yaw = cfg.getDouble("Location.yaw");
+	    	         	 double pi = cfg.getDouble("Location.pitch");
+	    
+	   	         	 
+	    	         	 Location loc = new Location(Bukkit.getWorld(w), x, y, z);
+	   	         	 loc.setYaw((float) yaw);
+	   	         	 loc.setPitch((float) pi);
+	   	         	 p.teleport(loc);
+	   	         	 String geportetHub = cfgm.getString("messages.Teleport.Teleport to hub");
+	   	         	 geportetHub = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.Teleport.Teleport to hub"));
+	   	         	 p.sendMessage("§4[§1SM§4]: " + geportetHub);
+	    			}
+	    			
+	    		}else if (args.length >= 0) {
+	    			String zuVieleArg = cfgm.getString("messages.default.Too much arguments");
+	    			zuVieleArg = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.Too much arguments"));
+	    			p.sendMessage("§4[§1SM§4]: " + zuVieleArg);
+	    		}
+	    		
+    		}else{
+    			String KeineRechte = cfgm.getString("messages.default.no permissions");
+    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.no permissions"));
+    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    		}
+    	}
+	}
+	return true;
+}
+
+}

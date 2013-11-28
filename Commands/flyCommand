@@ -1,0 +1,45 @@
+package de.GamerWorld.SM.Commands;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import de.GamerWorld.SM.Main.Main;
+
+
+public class flyCommand implements CommandExecutor
+{
+	  Main plugin;
+
+	  public flyCommand(Main plugin)
+	  {
+	    this.plugin = plugin;
+	  }
+
+	  @Override
+	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	  {
+	    if (cmd.getName().equalsIgnoreCase("fly")) {
+	      if (!(sender instanceof Player)) {
+	        sender.sendMessage(Main.prefixb + Main.noPlayer);
+	        return true;
+	      }
+
+	      Player p = (Player)sender;
+	      if (!p.hasPermission("sm.fly")) {
+	        p.sendMessage(Main.prefixb + Main.KeineRechte);
+	        return true;
+	      }
+
+	      if (p.getAllowFlight())
+	        p.setAllowFlight(false);
+	      else {
+	        p.setAllowFlight(true);
+	      }
+	      return true;
+	    }
+	    return true;
+	  }
+
+	}

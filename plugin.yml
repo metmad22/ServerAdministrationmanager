@@ -1,0 +1,79 @@
+name: ServerManager
+version: 2.2_BETA
+author: Minecraftair
+main: de.GamerWorld.SM.Main.Main
+
+commands: 
+  sm:
+    description: Main Command with many options!
+    usage:
+  sminfo:
+    description: Shows the info about the plugin!
+    usage:
+  hub:
+    description: Teleport to the Hub / Spawn!
+    usage: 
+  sethub:
+    description: Set the Hub / Spawn!
+    usage:
+  time:
+    description: Set the time to day or night!
+    usage: 
+  back:
+    description: Teleport to your last Location!
+    usage: 
+  clearinv:
+    description: Clear your Inventory or the one of somebody else!
+    usage: 
+    aliases: [invclear, clearinventory, inventoryclear]
+  cc:
+    description: Clear the chat, if you had an spammer!
+    usage:
+    aliases: [CC, ChatClear]
+  head:
+    description: Spawn an head of the named Player!
+    usage: /head player <playername>
+  warp:
+    description: Warp you!
+    usage: /warp <warpname>
+  com:
+    description: Open the MainTeleportInventory!
+    usage:
+  home:
+    description: Set your homes!
+    usage:
+  ban:
+    description: Ban an bad Player or an hacker!
+    usage:
+  unban:
+    description: Unban an Player if you think he leard his lesson!
+    usage:
+  fly:
+    descroption: Fly in the Survivalmode with this command!
+    usage:
+  gamemode:
+    description: Set the gamemode of other players!
+    usage:
+    aliases: [gm]
+  gms:
+    description: Set you own gamemode to Survival!
+    usage: 
+    aliases: [0]
+  gmc:
+    description: Set you own gamemode to Creativ!
+    usage: 
+    aliases: [1]
+  gma:
+    description: Set you own gamemode to Adventure!
+    usage: 
+    aliases: [2]
+  firework:
+    description: Shoot an random firework!
+    usage:
+    aliases: [fw, firew, fwork, shootf]
+  god:
+    description: Make you an god!
+    usage: 
+  bigtree:
+    description: Spawn an bigtree!
+    usage:

@@ -1,0 +1,63 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+
+public class timeCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equals("time") || cmd.getName().equals("Time")) {
+    		Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+    		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+ 
+			if (args.length == 1) {
+    			if (args[0].equalsIgnoreCase("day")) {
+	    			if (p.hasPermission("sm.time.day")) {
+	    				p.getWorld().setTime(0L);
+	    				String timeday = cfg.getString("messages.time.Set to Day");
+	    				timeday = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.time.Set to Day"));
+						cs.sendMessage("§4[§1SM§4]: " + timeday);
+	    			}else{
+	        			String KeineRechte = cfg.getString("messages.default.no permissions");
+	        			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+	        			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+	        		}
+    			}
+    			if (args[0].equalsIgnoreCase("night")) {
+    				if (p.hasPermission("sm.time.night")) {
+    					if (p != null) {
+    						p.getWorld().setTime(16000L);
+    						String TimeNight = cfg.getString("messages.time.Set to Night");
+    						TimeNight = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.time.Set to Night"));
+    						cs.sendMessage("§4[§1SM§4]: " + TimeNight);
+    					}
+    				}else{
+    	    			String KeineRechte = cfg.getString("messages.default.no permissions");
+    	    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+    	    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    	    		}
+    			}
+    		}else if (args.length > 1) {
+    			String zuVieleArg = cfg.getString("messages.default.Too much arguments");
+    			zuVieleArg = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.Too much arguments"));
+    			p.sendMessage("§4[§1SM§4]: " + zuVieleArg);
+    		}else if (args.length < 1) {
+    			String zuWenigArg = cfg.getString("messages.default.Not enough arguments");
+    			zuWenigArg = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.Not enough arguments"));
+    			p.sendMessage("§4[§1SM§4]: " + zuWenigArg);
+    		}
+    	}
+		return true;
+	}
+
+}

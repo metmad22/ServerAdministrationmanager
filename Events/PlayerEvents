@@ -1,0 +1,188 @@
+package de.GamerWorld.SM.Events;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class PlayerEvents implements Listener{
+
+	private Main plugin;
+	
+	public PlayerEvents (Main plugin) {
+		this.plugin = plugin;
+	}
+	
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e) {
+		final Player p = e.getPlayer();
+		if (p.isOp()){
+			String msg = this.plugin.getConfig().getString("Config.Chat.JoinMessages.OP");
+			msg = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("Config.Chat.JoinMessages.OP"));
+			msg = msg.replace("%p%", p.getName());
+			e.setJoinMessage(msg);			
+		} else {
+			String msg = this.plugin.getConfig().getString("Config.Chat.JoinMessages.Player");
+			msg = msg.replace("%p%", p.getName());
+			msg = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("Config.Chat.JoinMessages.Player"));
+			e.setJoinMessage(msg);
+		}
+		if (p.hasPermission("sm.SpawnAtHub")) {
+			File file = new File ("plugins/ServerManager/Teleportation/Other Points", "hub.yml");
+			if (!(file.exists())) {
+				p.sendMessage("§4[§1SM§4]: WARNING! PROBLEM WITH THIS PLUGIN! hub.yml DOES NOT EXIST!");
+				p.sendMessage("§4[§1SM§4]: Please contact the Serverowner to solve this problem!");
+			}else{
+				YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+				String w = cfg.getString("Location.world");
+	         	double x = cfg.getDouble("Location.X");
+	         	double y = cfg.getDouble("Location.Y");
+	         	double z = cfg.getDouble("Location.Z");
+	         	double yaw = cfg.getDouble("Location.yaw");
+	         	double pi = cfg.getDouble("Location.pitch");
+
+	         	 
+	         	Location loc = new Location(Bukkit.getWorld(w), x, y, z);
+	         	loc.setYaw((float) yaw);
+	         	loc.setPitch((float) pi);
+	         	p.teleport(loc);
+			}
+		}else{
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+			String KeineRechte = cfg.getString("messages.default.no permissions");
+			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+		}
+		if (p.hasPlayedBefore()) {
+			return;
+		} else {
+			File filep = new File("plugins/ServerManager", "player.yml");
+			FileConfiguration cfgp = YamlConfiguration.loadConfiguration(filep);
+			String str = "Players." + p.getName() + ".";
+			cfgp.set(str + "Godmode", false);
+			try {
+				cfgp.save(filep);
+			} catch (IOException ex) {}
+			System.out.println("[Servermanager]: The Player '" + p + "' has been saved!");
+		}
+		
+	}
+	
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e) {
+		Player p = e.getPlayer();
+		if (p.isOp()){
+			String msg = this.plugin.getConfig().getString("Config.Chat.LeaveMessages.OP");
+			msg = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("Config.Chat.LeaveMessages.OP"));
+			msg = msg.replace("%p%", p.getName());
+			e.setQuitMessage(msg);
+		} else {
+			String msg = this.plugin.getConfig().getString("Config.Chat.LeaveMessages.Player");
+			msg = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("Config.Chat.LeaveMessages.Player"));
+			msg = msg.replace("%p%", p.getName());
+			e.setQuitMessage(msg);
+		}
+
+	}
+	
+	@EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+      Player p = event.getPlayer();
+      Location from = event.getFrom();
+      Main.backdb.put(p.getName(), from);
+    }
+	
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent e) {
+		Player p = e.getPlayer();
+		File filew = new File("plugins/ServerManager/Teleportation/homes/" + p.getName(), "homes.yml");
+		FileConfiguration cfgw = YamlConfiguration.loadConfiguration(filew);
+		if (this.plugin.getConfig().getBoolean("Config.default.Respawn at home")) {
+				try {
+    				String str = "Homes.home.";
+    				World w = Bukkit.getWorld(cfgw.getString(str + "world"));
+    				if (w == null) {
+    					p.sendMessage("§4[§1SM§4]: Error! The world does not exists any more!");
+    				}
+    				double x = cfgw.getDouble(str + "X");
+    				double y = cfgw.getDouble(str + "Y");
+    				double z = cfgw.getDouble(str + "Z");
+    				double yaw = cfgw.getDouble(str + "yaw");
+    				double pi = cfgw.getDouble(str + "pitch");
+    				
+    				Location loc = new Location(w, x, y, z, (float) yaw, (float) pi);
+    				p.teleport(loc);
+    				
+    				p.sendMessage("§l§7[§4!§7]:§r §6You have died! To get to your last location do /back");
+				}catch (NullPointerException exc) {
+					p.sendMessage("§l§7[§4!§7]:§r §4You don´t set an homepoint! Please sleep in an bed!");
+					p.performCommand("hub");
+				}
+		} else {
+			p.performCommand("hub");
+			p.sendMessage("§l§7[§4!§7]:§r §6You have died! To get to your last location do /back");
+		}
+	}
+	
+	@EventHandler
+	public void onBedLeave (PlayerBedLeaveEvent e) {
+		Player p = e.getPlayer();
+		File filew = new File("plugins/ServerManager/Teleportation/homes/" + p.getName(), "homes.yml");
+		FileConfiguration cfgw = YamlConfiguration.loadConfiguration(filew);
+			
+		String str = "Homes.home.";
+		Location loc = p.getLocation();
+        String w = p.getWorld().getName();
+        double x = loc.getX();
+        double y = loc.getY();
+        double z = loc.getZ();
+        double yaw = loc.getYaw();
+        double pi = loc.getPitch();
+        cfgw.set(str + "world", w);
+        cfgw.set(str + "X", x);
+        cfgw.set(str + "Y", y);
+        cfgw.set(str + "Z", z);
+        cfgw.set(str + "yaw", yaw);
+        cfgw.set(str + "pitch", pi);
+        Bukkit.getPlayer(p.getName()).setBedSpawnLocation(loc);
+        try {
+        	cfgw.save(new File("plugins/ServerManager/Teleportation/homes/" + p.getName(), "homes.yml"));
+            p.sendMessage("§l§7[§4!§7]:§r §7You saved your bed as home!");
+        } catch (IOException ex) {
+        	System.out.println("[ServerManager]: Saving of Home faild!!!");
+         	ex.printStackTrace();
+        }
+
+	}
+	@EventHandler
+	public void onEntityDamage (EntityDamageEvent e) {
+		File filep = new File("plugins/ServerManager", "player.yml");
+		FileConfiguration cfgp = YamlConfiguration.loadConfiguration(filep);
+		if (e.isCancelled()) {
+			return;
+		}
+		if (e.getEntity() instanceof Player) {
+			Player p = (Player)e.getEntity();
+			if (cfgp.getBoolean("Players." + p.getName() + ".Godmode") == true) {
+				e.setCancelled(true);
+			}
+		}
+	}
+}

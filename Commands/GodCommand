@@ -1,0 +1,60 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class GodCommand implements CommandExecutor{
+
+	Main plugin;
+	
+	File filep = new File("plugins/ServerManager", "player.yml");
+	FileConfiguration cfgp = YamlConfiguration.loadConfiguration(filep);
+	
+	public GodCommand(Main plugin) {
+		this.plugin = plugin;
+	}
+
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("god")) {
+			Player p = (Player)cs;
+			if (p == null) {
+				return true;
+			}
+			if (!p.hasPermission("sm.god")) {
+				p.sendMessage(Main.prefix + Main.KeineRechte);
+			}
+			if (cfgp.getBoolean("Players." + p.getName() + ".Godmode") == true) {
+				String str = "Players." + p.getName() + ".";
+				cfgp.set(str + "Godmode", false);
+				try {
+					cfgp.save(filep);
+				} catch (IOException e) {}
+				p.sendMessage(Main.prefixb + "§7You aren´t a god anymore!");
+			}else if (cfgp.getBoolean("Players." + p.getName() + ".Godmode") == false){
+				String str = "Players." + p.getName() + ".";				
+				cfgp.set(str + "Godmode", true);
+				try {
+					cfgp.save(filep);
+				} catch (IOException e) {}
+				p.sendMessage(Main.prefixb + "§7You are now an god!");
+				Player target = this.plugin.getServer().getPlayerExact(p.getName());
+				target.getWorld().strikeLightning(target.getLocation());
+				
+			}
+	             	 
+	        return true;
+		}
+		return true;
+	}
+	
+}

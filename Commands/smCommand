@@ -1,0 +1,257 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class smCommand implements CommandExecutor {
+	
+	private Main plugin;	
+	
+	public smCommand (Main plugin) {
+		this.plugin = plugin;
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+	    Player p = (Player)cs;
+	    if (cs instanceof Player) {
+	    	if (cmd.getName().equalsIgnoreCase("sm")) {
+			    if (args.length == 0) {
+		            PluginDescriptionFile pdf = plugin.getDescription();
+		        	String version = pdf.getVersion();  
+		        	List<String> autor = pdf.getAuthors();
+			    	p.sendMessage("§6-*-§9[ServerManager]§6-*-");
+		            p.sendMessage(" ");
+		            p.sendMessage("§2Author: §a" + autor);
+		            p.sendMessage("§2Plugin type: §aAdmintools, Fun, Teleportation");
+		            p.sendMessage("§2Version: §a" + version);
+		            p.sendMessage("§2DevBukkit Link:");
+		            p.sendMessage("§ahttp://dev.bukkit.org/bukkit-plugins/manage-your-server/");
+		            p.sendMessage("§6For more help: /sm help");
+			    }
+			    if (args.length == 1) {
+			    	if (args[0].equalsIgnoreCase("help")) {
+			    		p.sendMessage("§6-*-§9[ServerManagerHelp]§6-*-");
+			            p.sendMessage("");
+			            p.sendMessage("§2/sm - §aOpen Maininfos about the plugin.");
+			            p.sendMessage("§6For all Commands visite:");
+			            p.sendMessage("§6http://dev.bukkit.org/bukkit-plugins/manage-your-server/");
+			            p.sendMessage("§cThis will be changed in the next update!");
+			            }
+			    }
+			    if (args.length > 0) { 
+		    		if (args[0].equals("colors")) {
+		    			if (p.hasPermission("sm.info.color")) {
+			    			if (args.length == 1) {
+			    				p.sendMessage("§6-*-§9[ColorCodes]§e [Page 1]§6-*-");
+				    			p.sendMessage("");
+				    			p.sendMessage(" §1You can use it on signs, in books and in the chat!");
+				    			p.sendMessage("");
+				    			p.sendMessage(" §2Black: §0 &0 Text");
+				    			p.sendMessage(" §2Darkblue: §1 &1 Text");
+				    			p.sendMessage(" §2Darkgreen: §2 &2 Text");
+				    			p.sendMessage(" §2Dark Aqua: §3 &3 Text");
+				    			p.sendMessage(" §2Dark Red: §4 &4 Text");
+				    			p.sendMessage(" §2Dark Purple: §5 &5 Text");
+				    			p.sendMessage(" §2Gold: §6 &6 Text");
+				    			p.sendMessage(" §aMore: /sm colors 2");
+			    			}
+			    			if (args.length == 2) {
+			    				if (args[1].equals("2")) {
+					        		p.sendMessage("§6-*-§9[ColorCodes]§e [Page 2]§6-*-");
+					    			p.sendMessage("");
+					    			p.sendMessage(" §2Gray: §7 &7 Text");
+					    			p.sendMessage(" §2Dark Gray: §8 &8 Text");
+					    			p.sendMessage(" §2Blue: §9 &9 Text");
+					    			p.sendMessage(" §2Green: §a &a Text");
+					    			p.sendMessage(" §2Aqua: §b &b Text");
+					    			p.sendMessage(" §2Red: §c &c Text");
+					    			p.sendMessage(" §2Light Purple: §d &d Text");
+					    			p.sendMessage(" §2Yellow: §e &e Text");
+					    			p.sendMessage(" §2White: §f &f Text");
+			    				}	    				
+			    			}
+		    			}else{
+		    				File filem = new File("plugins/ServerManager", "messages.yml");
+    	        			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+    	        			String KeineRechte = cfgm.getString("messages.default.no permissions");
+    	        			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.no permissions"));
+    	        			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+		    			}
+		    		}
+		    		if (args[0].equals("formats")) {
+		    			if (p.hasPermission("sm.info.fomats")) {
+		    				p.sendMessage("§6-*-§9[FormatCodes]§6-*-");
+		    				p.sendMessage("");
+		    				p.sendMessage(" §1You can use it on signs, in books and in the chat!");
+		    				p.sendMessage("");
+		    				p.sendMessage(" §2Obfuscated: §a&k §ktext");
+		    				p.sendMessage(" §2Bold: §a &l §ltext");
+		    				p.sendMessage(" §2Strikethrough: §a &m §mtext");
+		    				p.sendMessage(" §2Underline: §a &n §ntext");
+		    				p.sendMessage(" §2Italic: §a &o §otext");
+		    				p.sendMessage(" §2Reset: §a &r");
+		    			}else{
+		    				File filem = new File("plugins/ServerManager", "messages.yml");
+    	        			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+    	        			String KeineRechte = cfgm.getString("messages.default.no permissions");
+    	        			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.no permissions"));
+    	        			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+		    			}
+		    		}
+		    		if (args[0].equals("effects")) {
+		    			if(p.hasPermission("sm.info.effect")) {
+		    				if (args.length == 1) {
+				    				p.sendMessage("§6-*-§9[EffectCodes]§e [Page 1]§6-*-");
+					    			p.sendMessage("");
+					    			p.sendMessage(" §1Der Kommand: /effect [Player] [ID] [seconds] [Stärke]");
+					    			p.sendMessage("");
+					    			p.sendMessage(" §cId List: ");
+					    			p.sendMessage(" §2Speed: §a1");
+					    			p.sendMessage(" §2Slowness: §a2");
+					    			p.sendMessage(" §2Haste: §a3");
+					    			p.sendMessage(" §2Mining Fatigue: §a4");
+					    			p.sendMessage(" §2Strength: §a5");
+					    			p.sendMessage(" §2Instant Health: §a6");
+					    			p.sendMessage(" §aMore: /sm effects 2");
+		    				}
+		    				if (args.length == 2) {
+		    					if (args[1].equals("2")) {
+		    	    				p.sendMessage("§6-*-§9[EffectCodes]§e [Page 2]§6-*-");
+		    		    			p.sendMessage("");
+		    		    			p.sendMessage(" §2Instant Damage: §a7");
+		    		    			p.sendMessage(" §2Jump Boost: §a8");
+		    		    			p.sendMessage(" §2Nausea: §a9");
+		    		    			p.sendMessage(" §2Regeneration: §a10");
+		    		    			p.sendMessage(" §2Resistance: §a11");
+		    		    			p.sendMessage(" §2Fire Resistance: §a12");
+		    		    			p.sendMessage(" §2Water Breathing: §a13");
+		    		    			p.sendMessage(" §2Invisibility: §a14"); 
+		    		    			p.sendMessage(" §2Blindness: §a15");
+		    		    			p.sendMessage(" §aMore: /sm effects 3");
+		    					}
+		    					if (args[1].equals("3")) {
+		    	    				p.sendMessage("§6-*-§9[EffectCodes]§e [Page 3]§6-*-");
+		    		    			p.sendMessage("");
+		    		    			p.sendMessage(" §2Night Vision: §a16");
+		    		    			p.sendMessage(" §2Hunger: §a17");
+		    		    			p.sendMessage(" §2Weakness: §a18");
+		    		    			p.sendMessage(" §2Poison: §a19");
+		    		    			p.sendMessage(" §2Wither: §a20");
+		    		    			p.sendMessage(" §2Health Boost: §a21");
+		    		    			p.sendMessage(" §2Absorption: §a22");
+		    		    			p.sendMessage(" §2Saturation: §a23");
+		    						}
+		    					}
+		    			}else{
+		    				File filem = new File("plugins/ServerManager", "messages.yml");
+    	        			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+    	        			String KeineRechte = cfgm.getString("messages.default.no permissions");
+    	        			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.no permissions"));
+    	        			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+		    			}
+		    		}
+		    		if (args[0].equals("settel")) {
+		    				if (args[1].equals("HoF")) {
+		    					if (p.hasPermission("sm.tel.set")) {
+		    				        File fileh = new File("plugins/ServerManager/Teleportation/Other Points", "Hall of Fame.yml");
+		    				        	if (!fileh.exists()) {
+		    				                FileConfiguration cfgh = YamlConfiguration.loadConfiguration(fileh);
+		    				                	Location loc = p.getLocation();
+		    				                	String w = p.getWorld().getName();
+		    						            double x = loc.getX();
+		    						            double y = loc.getY();
+		    						            double z = loc.getZ();
+		    						            double yaw = loc.getYaw();
+		    						            double pi = loc.getPitch();
+		    						            cfgh.set("Location.world", w);
+		    						            cfgh.set("Location.X", x);
+		    						            cfgh.set("Location.Y", y);
+		    						            cfgh.set("Location.Z", z);
+		    						            cfgh.set("Location.yaw", yaw);
+		    						            cfgh.set("Location.pitch", pi);            	 
+		    						            	try {
+		    						            		cfgh.save(new File("plugins/ServerManager/Teleportation/Other Points", "Hall of Fame.yml"));
+		    						         		} catch (IOException e) {
+		    						         			System.out.println("[ServerManager]: Saving of HoF-Data faild!!!");
+		    						         			e.printStackTrace();
+		    						         		}
+		    						             //AusgabeWerte
+		    						             int X = p.getLocation().getBlockX();
+		    						             int Y = p.getLocation().getBlockY();
+		    						             int Z = p.getLocation().getBlockZ();
+		    						             
+		    						             p.sendMessage("§4[§1SM§4]: §eThe Hall of Fame has been set to: " + ChatColor.BOLD + X + "§r§e | " + ChatColor.BOLD + Y + "§r§e | " + ChatColor.BOLD + Z + " §r§e. (world: " + w + ")");
+		    						             System.out.println("[ServerManager]: Hall of Fame.yml erstellt!");
+		    						             return true;
+
+		    				            }else{
+		    				            	FileConfiguration cfgh = YamlConfiguration.loadConfiguration(fileh);
+		    				                try {
+		    				                	cfgh.save(new File("plugins/ServerManager/Teleportation/Other Points", "Hall of Fame.yml"));
+		    					         	} catch (IOException e) {
+		    					         		System.out.println("[ServerManager]: Saving of HoF-Data faild!!!");
+		    					         		e.printStackTrace();
+		    					         	}
+		    				               		
+		    				                Location loc = p.getLocation();
+		    						        String w = p.getWorld().getName();
+		    						        double x = loc.getX();
+		    						        double y = loc.getY();
+		    						        double z = loc.getZ();
+		    						        double yaw = loc.getYaw();
+		    						        double pi = loc.getPitch();
+		    						        cfgh.set("Location.world", w);
+		    						        cfgh.set("Location.X", x);
+		    						        cfgh.set("Location.Y", y);
+		    						        cfgh.set("Location.Z", z);
+		    						        cfgh.set("Location.yaw", yaw);
+		    						        cfgh.set("Location.pitch", pi);             	 
+		    						        try {
+		    						        	cfgh.save(new File("plugins/ServerManager/Teleportation/Other Points", "Hall of Fame.yml"));
+		    						        } catch (IOException e) {
+		    						        	System.out.println("[ServerManager]: Saving of HoF-Data faild!!!");
+		    						         	e.printStackTrace();
+		    						        }
+		    						        //AusgabeWerte
+		    						        int X = p.getLocation().getBlockX();
+		    						        int Y = p.getLocation().getBlockY();
+		    						        int Z = p.getLocation().getBlockZ();
+		    						            	 
+		    						        p.sendMessage("§4[§1SM§4]: §eThe Hall of Fame has been set to: " + ChatColor.BOLD + X + "§r§e | " + ChatColor.BOLD + Y + "§r§e | " + ChatColor.BOLD + Z + " §r§e. (World: " + w + ")");
+
+		    						        return true; 
+		    				            }
+		    					}else{
+				    				File filem = new File("plugins/ServerManager", "messages.yml");
+		    	        			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+		    	        			String KeineRechte = cfgm.getString("messages.default.no permissions");
+		    	        			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfgm.getString("messages.default.no permissions"));
+		    	        			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+				    			}		    				
+		    				}
+		    			}
+	    			}
+			    		    
+	    		}	    	
+	    	} else {
+	    		cs.sendMessage(ChatColor.DARK_RED + "You must be an Player to use the commands!");
+	    	}	
+	    return true;    
+	}
+	
+
+}

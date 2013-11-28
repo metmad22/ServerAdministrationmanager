@@ -1,0 +1,65 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+
+
+public class headCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("head")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "config.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);    		
+			File filem = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+			
+			String getHeadPlayer = cfgm.getString("messages.Heads.Get Head");
+			if (p.hasPermission("sm.head")) {
+    			if (args.length == 1) {  						    				
+    				ItemStack PH = new ItemStack(Material.SKULL_ITEM);
+    				PH.setDurability((short)3);
+    				SkullMeta PHM = (SkullMeta)PH.getItemMeta();				
+    				PHM.setOwner(args[0]);
+    				PHM.setDisplayName(args[0]);
+    	        	ArrayList<String> lore1 = new ArrayList<String>();
+    	        	lore1.add("§5Set an head of: " + args[0]);
+    				PHM.setLore(lore1);
+    				PH.setItemMeta(PHM);
+    						
+      				p.getInventory().addItem(PH);
+    				getHeadPlayer = ChatColor.translateAlternateColorCodes('&', getHeadPlayer);
+    				getHeadPlayer = getHeadPlayer.replace("%p%", args[0]);
+    				p.sendMessage("§4[§1SM§4]: " + getHeadPlayer);    				
+    			}else if (args.length <= 1) {
+    				String zuWeinigArgs = cfgm.getString("messages.default.Not enough arguments");
+    				zuWeinigArgs = ChatColor.translateAlternateColorCodes('&', zuWeinigArgs);
+    				p.sendMessage("§4[§1SM§4]: " + zuWeinigArgs);
+    			}else if (args.length >= 1) {
+    				String zuVieleArgs = cfgm.getString("messages.default.Too much arguments");
+    				zuVieleArgs = ChatColor.translateAlternateColorCodes('&', zuVieleArgs);
+    				p.sendMessage("§4[§1SM§4]: " + zuVieleArgs);
+    			}
+    			
+    		}else{
+    			String KeineRechte = cfg.getString("messages.default.no permissions");
+    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    		}
+    	}
+		return true;
+	}
+
+}

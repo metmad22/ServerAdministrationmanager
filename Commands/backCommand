@@ -1,0 +1,40 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class backCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("back")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+    		if (p.hasPermission("sm.back")) {
+    			if (Main.backdb.containsKey(p.getName()));
+    				Location loc = (Location)Main.backdb.get(p.getName());
+    				p.teleport(loc);
+    				String telBack = cfg.getString("messages.Teleport.Back");
+    				telBack = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.Teleport.Back"));
+    				p.sendMessage("§4[§1SM§4]: " + telBack);
+    		}else{
+    			String KeineRechte = cfg.getString("messages.default.no permissions");
+    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    		}
+    	}
+		return true;
+	}
+
+}

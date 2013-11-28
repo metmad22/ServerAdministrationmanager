@@ -43,37 +43,37 @@ commands:
     description: Set your homes!
     usage:
   ban:
-    description: Ban an bad Player or an hacker!
+    description: Ban a bad Player or an hacker!
     usage:
   unban:
-    description: Unban an Player if you think he leard his lesson!
+    description: Unban an Player if you think he learned his lesson!
     usage:
   fly:
-    descroption: Fly in the Survivalmode with this command!
+    descroption: Fly in the Survival mode with this command!
     usage:
   gamemode:
     description: Set the gamemode of other players!
     usage:
     aliases: [gm]
   gms:
-    description: Set you own gamemode to Survival!
+    description: Set your own gamemode to Survival!
     usage: 
     aliases: [0]
   gmc:
-    description: Set you own gamemode to Creativ!
+    description: Set your own gamemode to Creativ!
     usage: 
     aliases: [1]
   gma:
-    description: Set you own gamemode to Adventure!
+    description: Set your own gamemode to Adventure!
     usage: 
     aliases: [2]
   firework:
-    description: Shoot an random firework!
+    description: Shoot a random firework!
     usage:
     aliases: [fw, firew, fwork, shootf]
   god:
-    description: Make you an god!
+    description: Make yourself a god!
     usage: 
   bigtree:
-    description: Spawn an bigtree!
+    description: Spawn a bigtree!
     usage:

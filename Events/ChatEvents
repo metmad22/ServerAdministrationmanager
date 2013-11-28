@@ -1,0 +1,202 @@
+package de.GamerWorld.SM.Events;
+
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.help.HelpTopic;
+
+import de.GamerWorld.SM.Main.Main;
+
+public class ChatEvents implements Listener{
+
+	private Main plugin;
+	
+	public ChatEvents (Main plugin) {
+		this.plugin = plugin;
+	}
+	
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent e) {
+		if (this.plugin.getConfig().getBoolean("Config.Chat.Colors activated")) {
+			if (e.getPlayer().hasPermission("SM.chatcolor")) {
+				e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
+	
+			}
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void UnknownCom (PlayerCommandPreprocessEvent e) {
+		if (!(e.isCancelled())) {
+			Player p = e.getPlayer();
+			String msg = e.getMessage().split(" ") [0];
+			HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(msg);
+			if (topic == null) {
+				File file = new File("plugins/ServerManager", "messages.yml");
+				FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+				
+				String comnichda = cfg.getString("messages.default.Command does not exists!");
+				comnichda = ChatColor.translateAlternateColorCodes('&', comnichda);
+				comnichda = comnichda.replace("%command%", msg);
+					p.sendMessage("§l§7[§4!§7]:§r " + comnichda);
+					e.setCancelled(true);
+			}
+			
+		}
+	}
+	
+	@EventHandler
+	public void Reload (PlayerCommandPreprocessEvent e){
+		Player p = e.getPlayer();
+		String cm = e.getMessage();
+		if(cm.equalsIgnoreCase("/rl") || cm.equalsIgnoreCase("/reload")) {
+			if(p.hasPermission("sm.reload")) {
+				e.setCancelled(true);
+								
+				File filem = new File("plugins/ServerManager", "messages.yml");
+				FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+
+				String serverreloadz1 = cfgm.getString("messages.defalaut.Reload.Before reload.Line 1");
+				serverreloadz1 = ChatColor.translateAlternateColorCodes('&', serverreloadz1);
+				
+				String serverreloadz2 = cfgm.getString("messages.defalaut.Reload.Before reload.Line 2");
+				serverreloadz2 = ChatColor.translateAlternateColorCodes('&', serverreloadz2);
+				
+				String serverreloadz3 = cfgm.getString("messages.defalaut.Reload.Before reload.Line 3");
+				serverreloadz3 = ChatColor.translateAlternateColorCodes('&', serverreloadz3);
+				
+				String serverreloadz4 = cfgm.getString("messages.defalaut.Reload.Before reload.Line 4");
+				serverreloadz4 = ChatColor.translateAlternateColorCodes('&', serverreloadz4);
+				
+				String serverreloadz5 = cfgm.getString("messages.defalaut.Reload.Before reload.Line 5");
+				serverreloadz5 = ChatColor.translateAlternateColorCodes('&', serverreloadz5);
+				
+				String serverreloadz1f = cfgm.getString("messages.default.Reload.After reload.Line 1");
+				serverreloadz1f = ChatColor.translateAlternateColorCodes('&', serverreloadz1f);
+				
+				String serverreloadz2f = cfgm.getString("messages.default.Reload.After reload.Line 2");
+				serverreloadz2f = ChatColor.translateAlternateColorCodes('&', serverreloadz2f);
+				
+				String serverreloadz3f = cfgm.getString("messages.default.Reload.After reload.Line 3");
+				serverreloadz3f = ChatColor.translateAlternateColorCodes('&', serverreloadz3f);
+				
+				String serverreloadz4f = cfgm.getString("messages.default.Reload.After reload.Line 4");
+				serverreloadz4f = ChatColor.translateAlternateColorCodes('&', serverreloadz4f);
+				
+				String serverreloadz5f = cfgm.getString("messages.default.Reload.After reload.Line 5");
+				serverreloadz5f = ChatColor.translateAlternateColorCodes('&', serverreloadz5f);
+				
+				
+				
+				
+				if(plugin.getConfig().getInt("Config.default.Reload.Message Length before start") == 0) {
+					
+				}else				
+				if (plugin.getConfig().getInt("Config.default.Reload.Message Length before start") == 1) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1);
+				}else
+				if (plugin.getConfig().getInt("Config.default.Reload.Message Length before start") == 2) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2);
+
+				}else
+				if (plugin.getConfig().getInt("Config.default.Reload.Message Length before start") == 3) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz3);
+
+				}else
+				if (plugin.getConfig().getInt("Config.default.Reload.Message Length before start") == 4) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz3);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz4);
+
+				}else
+				if (plugin.getConfig().getInt("Config.default.Reload.Message Length before start") == 5) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz3);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz4);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz5);
+
+				}else{
+					System.out.println("[ServerManager]: Error in Config! Please just enter an number between 1 and 5 in the config.yml!!!");
+					p.sendMessage("§4[ServerManager]: §lThe lines have to be under 6!");
+				}
+				
+				Bukkit.broadcastMessage("");
+				Bukkit.reload();
+				Bukkit.broadcastMessage("");
+				
+				if(plugin.getConfig().getInt("Config.default.Reload.Message Length after finish") == 0) {					
+				
+				}else if (plugin.getConfig().getInt("Config.default.Reload.Message Length after finish") == 1) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1f);
+				}else if (plugin.getConfig().getInt("Config.default.Reload.Message Lenght finish") == 2) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2f);
+
+				}else if (plugin.getConfig().getInt("Config.default.Reload.Message Length after finish") == 3) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz3f);
+
+				}else if (plugin.getConfig().getInt("Config.default.Reload.Message Length after finish") == 4) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz3f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz4f);
+
+				}else if (plugin.getConfig().getInt("Config.default.Reload.Message Length after finish") == 5) {
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz1f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz2f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz3f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz4f);
+					Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + serverreloadz5f);
+
+				}else{
+					System.out.println("[ServerManager]: Error in Config! Please just enter an number between 1 and 5 in the config.yml!!!");
+					p.sendMessage("§4[ServerManager]: §lThe lines have to be under 6!");
+				}
+
+			}
+		}
+	}
+	@EventHandler
+	public void GM (PlayerGameModeChangeEvent e) {
+		Player p = e.getPlayer();
+		File filem = new File("plugins/ServerManager", "messages.yml");
+		FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+		
+		if (e.getNewGameMode().equals(GameMode.SURVIVAL)) {			
+			String gmc = cfgm.getString("messages.Gamemode.Change");
+			gmc = ChatColor.translateAlternateColorCodes('&', gmc);
+			gmc = gmc.replace("%gamemode%", "SURVIVAL");
+			p.sendMessage(Main.prefixb + gmc);
+		} else if (e.getNewGameMode().equals(GameMode.CREATIVE)) {			
+			String gmc = cfgm.getString("messages.Gamemode.Change");
+			gmc = ChatColor.translateAlternateColorCodes('&', gmc);
+			gmc = gmc.replace("%gamemode%", "CREATIVE");
+			p.sendMessage(Main.prefixb + gmc);
+		} else if (e.getNewGameMode().equals(GameMode.ADVENTURE)) {			
+			String gmc = cfgm.getString("messages.Gamemode.Change");
+			gmc = ChatColor.translateAlternateColorCodes('&', gmc);
+			gmc = gmc.replace("%gamemode%", "ADVENTURE");
+			p.sendMessage(Main.prefixb + gmc);
+		}
+
+	}
+
+}

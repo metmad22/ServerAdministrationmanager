@@ -1,0 +1,157 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+public class ccCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("cc")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+    			if (p.hasPermission("sm.cc")) {
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				Bukkit.broadcastMessage(" ");
+    				String SMCC = cfg.getString("messages.Chat.ChatCleaner");
+    				SMCC = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.Chat.ChatCleaner"));
+    				cs.sendMessage("§l§7[§4!§7]:§r " + SMCC);
+				}else{
+					String KeineRechte = cfg.getString("messages.default.no permissions");
+					KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+					p.sendMessage("§4[§1SM§4]: " +  KeineRechte);
+				}
+			}		
+		return true;
+	}
+
+}

@@ -1,0 +1,85 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import de.GamerWorld.SM.Main.Main;
+
+
+public class gmCommand  implements CommandExecutor
+{
+	  Main plugin;
+
+	  public gmCommand (Main plugin)
+	  {
+	    this.plugin = plugin;
+	  }
+	  
+	  File filem = new File("plugins/ServerManager", "messages.yml");
+	  FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
+
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("gms")) {
+			Player p = (Player)cs;
+			if (p == null) {
+				return true;
+			}
+			if (!p.hasPermission("sm.gamemode.own")) {
+				p.sendMessage(Main.prefix + Main.KeineRechte);
+			}
+			if(!p.getGameMode().equals(GameMode.SURVIVAL)) {
+    			p.setGameMode(GameMode.SURVIVAL);
+    		}else{
+    			String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+    			Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+        		Isan = Isan.replace("%gamemode%", "SURVIVAL");
+    			p.sendMessage(Main.prefixb + Isan);	            		
+    		}
+		}
+		if (cmd.getName().equalsIgnoreCase("gmc")) {
+			Player p = (Player)cs;
+			if (p == null) {
+				return true;
+			}
+			if (!p.hasPermission("sm.gamemode.own")) {
+				p.sendMessage(Main.prefix + Main.KeineRechte);
+			}
+			if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+    			p.setGameMode(GameMode.CREATIVE);
+    		}else{
+    			String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+    			Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+        		Isan = Isan.replace("%gamemode%", "CREATIV");
+    			p.sendMessage(Main.prefixb + Isan);	            		
+    		}
+		}
+		if (cmd.getName().equalsIgnoreCase("gma")) {
+			Player p = (Player)cs;
+			if (p == null) {
+				return true;
+			}
+			if (!p.hasPermission("sm.gamemode.own")) {
+				p.sendMessage(Main.prefix + Main.KeineRechte);
+			}
+			if (!p.getGameMode().equals(GameMode.ADVENTURE)) {
+    			p.setGameMode(GameMode.ADVENTURE);
+    		}else{
+    			String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+    			Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+        		Isan = Isan.replace("%gamemode%", "ADVENTURE");
+    			p.sendMessage(Main.prefixb + Isan);	            		
+    		}
+		}
+		
+		return true;
+	}
+}

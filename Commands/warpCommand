@@ -1,0 +1,145 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+
+public class warpCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("warp")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+    		
+			File filew = new File("plugins/ServerManager/Teleportation", "warps.yml");
+			FileConfiguration cfgw = YamlConfiguration.loadConfiguration(filew);
+
+			if (args.length == 1) {
+				if (args[0].equalsIgnoreCase("list")) {
+					if (p.hasPermission("sm.warp.list")) {
+	    				String str = "§6§nAll Warps:§r §7";
+	    				for (String warp : cfgw.getConfigurationSection("Warps").getKeys(false)){
+	        				str += warp + " ";
+	    				}
+	    				p.sendMessage(str);
+
+					}else{
+						String KeineRechte = cfg.getString("messages.default.no permissions");
+						KeineRechte = ChatColor.translateAlternateColorCodes('&', KeineRechte);
+						p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+					}
+				}else{
+					if (p.hasPermission("sm.warp.tel")) {
+	    				try {
+		    				String str = "Warps." + args[0] + ".";
+		    				World w = Bukkit.getWorld(cfgw.getString(str + "world"));
+		    				if (w == null) {
+		    					p.sendMessage("§4[§1SM§4]: Error! The world does not exists any more!");
+		    				}
+		    				double x = cfgw.getDouble(str + "X");
+		    				double y = cfgw.getDouble(str + "Y");
+		    				double z = cfgw.getDouble(str + "Z");
+		    				double yaw = cfgw.getDouble(str + "yaw");
+		    				double pi = cfgw.getDouble(str + "pitch");
+		    				
+		    				Location loc = new Location(w, x, y, z, (float) yaw, (float) pi);
+		    				p.teleport(loc);
+		    				
+		    				String warptel = cfg.getString("messages.Teleport.Teleported to the Warp");
+		    				warptel = ChatColor.translateAlternateColorCodes('&', warptel);
+		    				warptel = warptel.replace("%warpname%", args[0]);
+		    				
+		    				p.sendMessage("§4[§1SM§4]: " + warptel);
+	    				}catch (NullPointerException exc) {
+	    					String nW = cfg.getString("messages.Teleport.Warp does not exists");
+	    					nW = ChatColor.translateAlternateColorCodes('&', nW);
+	    					nW = nW.replace("%warpname%", args[0]);
+	    					p.sendMessage("§4[§1SM§4]: " + nW);
+	    				}
+					}else{
+						String KeineRechte = cfg.getString("messages.default.no permissions");
+						KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+						p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+					}
+				}
+			}
+			if (args.length == 2) {
+				if (args[0].equalsIgnoreCase("set")) {
+					if (p.hasPermission("sm.warp.set")) {
+		    				String str = "Warps." + args[1] + ".";
+		    				
+		    				Location loc = p.getLocation();
+				            String w = p.getWorld().getName();
+				            double x = loc.getX();
+				            double y = loc.getY();
+				            double z = loc.getZ();
+				            double yaw = loc.getYaw();
+				            double pi = loc.getPitch();
+				            cfgw.set(str + "world", w);
+				            cfgw.set(str + "X", x);
+				            cfgw.set(str + "Y", y);
+				            cfgw.set(str + "Z", z);
+				            cfgw.set(str + "yaw", yaw);
+				            cfgw.set(str + "pitch", pi);
+	
+				            
+				            try {
+				            	cfgw.save(new File("plugins/ServerManager/Teleportation", "warps.yml"));
+				            	//AusgabeWerte
+				              	 int X = p.getLocation().getBlockX();
+				                 int Y = p.getLocation().getBlockY();
+				                 int Z = p.getLocation().getBlockZ();
+	
+				                 
+				                 p.sendMessage("§4[§1SM§4]: §eThe Warp '" + args[1] + "' has been set to: " + ChatColor.BOLD + X + "§r§e | " + ChatColor.BOLD + Y + "§r§e | " + ChatColor.BOLD + Z + " §r§e. (world: " + w + ")");
+	
+				            } catch (IOException e) {
+				         		System.out.println("[ServerManager]: Saving of Warp faild!!!");
+				         		e.printStackTrace();
+				         	}
+				             	 
+				                 return true;
+		    		}else{
+		    			String KeineRechte = cfg.getString("messages.default.no permissions");
+		    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+		    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+		    		}
+				}else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
+					if (p.hasPermission("sm.warp.remove")) {
+		    				 cfgw.set("Warps." + args[1], null);
+		    				 try {
+								cfgw.save(filew);
+								String removeWarp = cfg.getString("messages.Teleport.Warp removed");
+				   	         	removeWarp = ChatColor.translateAlternateColorCodes('&', removeWarp);
+				   	         	removeWarp = removeWarp.replace("%warpname%", args[1]);
+				   	         	p.sendMessage("§4[§1SM§4]: " + removeWarp);
+							} catch (IOException e) {
+								p.sendMessage("§4[§1SM§4]: Removing of warp failed!");
+								e.printStackTrace();
+							}
+		    			
+		    		}else{
+		    			String KeineRechte = cfg.getString("messages.default.no permissions");
+		    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+		    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+		    		}
+				}
+			}
+		}
+		return true;
+	}
+
+}

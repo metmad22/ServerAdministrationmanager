@@ -1,0 +1,107 @@
+package de.GamerWorld.SM.Commands;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+
+public class sethubCommand implements CommandExecutor {
+	
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("sethub")) {
+			Player p = (Player)cs;
+			File file = new File("plugins/ServerManager", "messages.yml");
+			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+	            if (p.hasPermission("sm.set.hub")) {
+	                if(cs instanceof Player) {
+	        			File fileh = new File ("plugins/ServerManager/Teleportation/Other Points", "hub.yml");
+
+	                	if (!fileh.exists()) {
+	                		FileConfiguration cfgh = YamlConfiguration.loadConfiguration(file);
+
+	                		 Location loc = p.getLocation();
+			            	 String w = p.getWorld().getName();
+			            	 double x = loc.getX();
+			            	 double y = loc.getY();
+			            	 double z = loc.getZ();
+			            	 double yaw = loc.getYaw();
+			            	 double pi = loc.getPitch();
+			            	 cfgh.set("Location.world", w);
+			            	 cfgh.set("Location.X", x);
+			            	 cfgh.set("Location.Y", y);
+			            	 cfgh.set("Location.Z", z);
+			            	 cfgh.set("Location.yaw", yaw);
+			            	 cfgh.set("Location.pitch", pi);            	 
+			            	 	try {
+			         				cfgh.save(new File("plugins/ServerManager/Teleportation/Other Points", "hub.yml"));
+			         			} catch (IOException e) {
+			         				System.out.println("[ServerManager]: Saving of Hub-Data faild!!!");
+			         				e.printStackTrace();
+			         			}
+			             	 //AusgabeWerte
+			              	 int X = p.getLocation().getBlockX();
+			                 int Y = p.getLocation().getBlockY();
+			                 int Z = p.getLocation().getBlockZ();
+			            	 
+			                 p.sendMessage("§4[§1SM§4]: §eThe Hub has been set to: " + ChatColor.BOLD + X + "§r§e | " + ChatColor.BOLD + Y + "§r§e | " + ChatColor.BOLD + Z + " §r§e. (world: " + w + ")");
+
+			                 return true;
+
+	                	}else{
+		            	 	FileConfiguration cfgh = YamlConfiguration.loadConfiguration(file);
+	                		try {
+		         				cfgh.save(new File("plugins/ServerManager/Teleportation/Other Points", "hub.yml"));
+		         			} catch (IOException e) {
+		         				System.out.println("[ServerManager]: Saving of Hub-Data faild!!!");
+		         				e.printStackTrace();
+		         			}
+	                		
+	                		 Location loc = p.getLocation();
+			            	 String w = p.getWorld().getName();
+			            	 double x = loc.getX();
+			            	 double y = loc.getY();
+			            	 double z = loc.getZ();
+			            	 double yaw = loc.getYaw();
+			            	 double pi = loc.getPitch();
+			            	 cfgh.set("Location.world", w);
+			            	 cfgh.set("Location.X", x);
+			            	 cfgh.set("Location.Y", y);
+			            	 cfgh.set("Location.Z", z);
+			            	 cfgh.set("Location.yaw", yaw);
+			            	 cfgh.set("Location.pitch", pi);             	 
+			            	 	try {
+			         				cfgh.save(new File("plugins/ServerManager/Teleportation/Other Points", "hub.yml"));
+			         			} catch (IOException e) {
+			         				System.out.println("[ServerManager]: Saving of Hub-Data faild!!!");
+			         				e.printStackTrace();
+			         			}
+			             	 //AusgabeWerte
+			              	 int X = p.getLocation().getBlockX();
+			                 int Y = p.getLocation().getBlockY();
+			                 int Z = p.getLocation().getBlockZ();
+			            	 
+			                 p.sendMessage("§4[§1SM§4]: §eThe Hub has been set to: " + ChatColor.BOLD + X + "§r§e | " + ChatColor.BOLD + Y + "§r§e | " + ChatColor.BOLD + Z + " §r§e. (World: " + w + ")");
+
+			                 return true; 
+	                	}
+	                 
+	                }
+	    		}else{
+    			String KeineRechte = cfg.getString("messages.default.no permissions");
+    			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
+    			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
+    		}
+    	}
+		return true;
+	}
+
+}

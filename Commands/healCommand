@@ -1,0 +1,51 @@
+package de.GamerWorld.SM.Commands;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class heal extends JavaPlugin implements CommandExecutor
+{
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	{
+		if (cmd.getName().equalsIgnoreCase("heal"))
+		{
+		if (sender.hasPermission("sm.heal") || sender.isOp())
+		{
+		if (!(sender instanceof Player))
+		{
+			sender.sendMessage(ChatColor.RED + "You cannot execute this command from the console!");
+			return true;
+		}
+		
+		Player player = (Player) sender;
+		
+		if (cmd.getName().equalsIgnoreCase("heal"))
+		{
+			if (args.length == 0)
+			{
+				player.setHealth(20);
+				player.sendMessage(ChatColor.GOLD + "You have been healed!");
+				return true;
+			}
+			Player target = Bukkit.getServer().getPlayer(args[0]);
+			if (target == null)
+			{
+				player.sendMessage(ChatColor.RED + "Target player could not be found!");
+				return true;
+			}
+			target.setHealth(20);
+			target.setFireTicks(0);
+			target.sendMessage(ChatColor.GOLD + "Player " + ChatColor.DARK_AQUA + sender.getName() + ChatColor.GOLD + " has healed you!");
+			player.sendMessage(ChatColor.GOLD + "Player " + ChatColor.DARK_AQUA + target.getName() + ChatColor.GOLD + " has been healed!");
+		}
+		}
+		}
+		return true;
+	}
+}

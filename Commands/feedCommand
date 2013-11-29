@@ -1,0 +1,51 @@
+package de.GamerWorld.SM.Commands;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class feed extends JavaPlugin implements CommandExecutor 
+{
+
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	{
+		if (cmd.getName().equalsIgnoreCase("feed"))
+		{
+	    if(sender.hasPermission("sm.feed") || sender.isOp())
+	    {
+	    if (!(sender instanceof Player))
+	    {
+		sender.sendMessage(ChatColor.RED + "You cannot execute this command from the console!");
+		return true;
+	    }
+	
+	    Player player1 = (Player) sender;
+	
+	    if (cmd.getName().equalsIgnoreCase("feed"))
+	    {
+		if (args.length == 0)
+		{
+			player1.setFoodLevel(20);
+			player1.sendMessage(ChatColor.GOLD + "You have replenished your hunger!");
+			return true;
+		}
+		Player target = Bukkit.getServer().getPlayer(args[0]);
+		if (target == null)
+		{
+			player1.sendMessage(ChatColor.RED + "Target player could not be found!");
+			return true;
+		}
+		target.setFoodLevel(20);
+		target.sendMessage(ChatColor.GOLD + "Player " + ChatColor.DARK_AQUA + sender.getName() + ChatColor.GOLD + " has replenished your hunger!");
+		player1.sendMessage(ChatColor.GOLD + "You have replenished " + ChatColor.DARK_AQUA + target.getName() + ChatColor.GOLD + " 's hunger!");
+		return true;
+	    }
+	    }
+		}
+		return true;
+	}
+}

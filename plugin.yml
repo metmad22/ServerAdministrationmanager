@@ -6,74 +6,82 @@ main: de.GamerWorld.SM.Main.Main
 commands: 
   sm:
     description: Main Command with many options!
-    usage:
+    usage: /sm
   sminfo:
     description: Shows the info about the plugin!
-    usage:
+    usage: /sminfo
   hub:
     description: Teleport to the Hub / Spawn!
-    usage: 
+    usage: /hub
   sethub:
     description: Set the Hub / Spawn!
-    usage:
+    usage: /sethub
   time:
     description: Set the time to day or night!
-    usage: 
+    usage: /time [day/night]
   back:
     description: Teleport to your last Location!
-    usage: 
+    usage: /back
   clearinv:
     description: Clear your Inventory or the one of somebody else!
-    usage: 
+    usage: /clearinv <Playername>
     aliases: [invclear, clearinventory, inventoryclear]
   cc:
     description: Clear the chat, if you had an spammer!
-    usage:
+    usage: /cc
     aliases: [CC, ChatClear]
   head:
     description: Spawn an head of the named Player!
     usage: /head player <playername>
   warp:
-    description: Warp you!
+    description: Warps you!
     usage: /warp <warpname>
   com:
-    description: Open the MainTeleportInventory!
+    description: Opens the MainTeleportInventory!
     usage:
   home:
-    description: Set your homes!
+    description: Sets your home!
     usage:
   ban:
-    description: Ban an bad Player or an hacker!
-    usage:
+    description: Ban a bad Player or an hacker!
+    usage: /ban [Playername] <reason>
   unban:
     description: Unban an Player if you think he leard his lesson!
-    usage:
+    usage: /unban [Playername]
+    aliases: [pardon]
   fly:
     descroption: Fly in the Survivalmode with this command!
-    usage:
+    usage: /fly
   gamemode:
     description: Set the gamemode of other players!
     usage:
     aliases: [gm]
   gms:
     description: Set you own gamemode to Survival!
-    usage: 
+    usage: /gms
     aliases: [0]
   gmc:
     description: Set you own gamemode to Creativ!
-    usage: 
+    usage: /gmc
     aliases: [1]
   gma:
     description: Set you own gamemode to Adventure!
-    usage: 
+    usage: /gma
     aliases: [2]
   firework:
-    description: Shoot an random firework!
-    usage:
+    description: Shoots a random firework!
+    usage: /firework
     aliases: [fw, firew, fwork, shootf]
   god:
-    description: Make you an god!
-    usage: 
+    description: Turns you into a god!
+    usage: /god
   bigtree:
     description: Spawn an bigtree!
-    usage:
+    usage: /bigtree [redwood/tree/jungle]
+  heal:
+    description: Heals you or an other player!
+    usage: /heal <Playername>
+  feed:
+    description: Feeds you or an other player!
+    usage: /feed <Playername>
+    usage: /god

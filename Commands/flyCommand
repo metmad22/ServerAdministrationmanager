@@ -22,22 +22,21 @@ public class flyCommand implements CommandExecutor
 	  {
 	    if (cmd.getName().equalsIgnoreCase("fly")) {
 	      if (!(sender instanceof Player)) {
-	        sender.sendMessage(Main.prefixb + Main.noPlayer);
+	        sender.sendMessage(Main.prefix + Main.noPlayer);
 	        return true;
 	      }
-
 	      Player p = (Player)sender;
 	      if (!p.hasPermission("sm.fly")) {
-	        p.sendMessage(Main.prefixb + Main.KeineRechte);
+	        p.sendMessage(Main.prefix + Main.KeineRechte);
 	        return true;
-	      }
+	      }else{
 
 	      if (p.getAllowFlight())
 	        p.setAllowFlight(false);
 	      else {
 	        p.setAllowFlight(true);
 	      }
-	      return true;
+	    }
 	    }
 	    return true;
 	  }

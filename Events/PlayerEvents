@@ -2,15 +2,18 @@ package de.GamerWorld.SM.Events;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
@@ -18,6 +21,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import de.GamerWorld.SM.Main.Main;
 
@@ -28,9 +35,51 @@ public class PlayerEvents implements Listener{
 	public PlayerEvents (Main plugin) {
 		this.plugin = plugin;
 	}
+	File file = new File ("plugins/ServerManager", "book.yml");
+	File file2 = new File("plugins/ServerManager/Teleportation", "compass.yml");
+	FileConfiguration cfgc = YamlConfiguration.loadConfiguration(file2);
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void ServerJoin(final PlayerJoinEvent e) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+			public void run() {
+				Player p = e.getPlayer();
+				Inventory inv = p.getInventory();
+				ItemStack telp = new ItemStack(Material.COMPASS, 1);
+				ItemMeta telpm = telp.getItemMeta();
+				String ntp = cfgc.getString("Compass.Item.Name");
+				ntp = ChatColor.translateAlternateColorCodes('&', ntp);
+				telpm.setDisplayName(ntp);
+				ArrayList<String> lore1 = new ArrayList<String>();
+				String loretelp = cfgc.getString("Compass.Item.Lore");
+				loretelp = ChatColor.translateAlternateColorCodes('&', loretelp);
+				lore1.add(loretelp);
+				telpm.setLore(lore1);
+				telp.setItemMeta(telpm);
+				inv.setItem(0, telp);
+				
+				if (file.exists()) {
+				YamlConfiguration cfgb = YamlConfiguration.loadConfiguration(file);	
+				ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
+				BookMeta meta = (BookMeta)book.getItemMeta();
+				String title = cfgb.getString("Book.title");
+				title = ChatColor.translateAlternateColorCodes('&', title);
+				meta.setTitle(title);
+				String a = cfgb.getString("Book.author");
+				a = ChatColor.translateAlternateColorCodes('&', a);
+				meta.setAuthor(a);
+				meta.setPages(cfgb.getStringList("Book.pages"));
+				book.setItemMeta(meta);
+				inv.setItem(8, book);
+				} else {
+					Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ServerManager]: WARNING! You don´t have an Startbook!");
+				}				
+			}
+		}, 1L);
+	}
 	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
+	@EventHandler(priority = EventPriority.LOW)
+	public void onJoin(PlayerJoinEvent e) {	
 		final Player p = e.getPlayer();
 		if (p.isOp()){
 			String msg = this.plugin.getConfig().getString("Config.Chat.JoinMessages.OP");
@@ -39,8 +88,8 @@ public class PlayerEvents implements Listener{
 			e.setJoinMessage(msg);			
 		} else {
 			String msg = this.plugin.getConfig().getString("Config.Chat.JoinMessages.Player");
-			msg = msg.replace("%p%", p.getName());
 			msg = ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("Config.Chat.JoinMessages.Player"));
+			msg = msg.replace("%p%", p.getName());
 			e.setJoinMessage(msg);
 		}
 		if (p.hasPermission("sm.SpawnAtHub")) {
@@ -63,17 +112,10 @@ public class PlayerEvents implements Listener{
 	         	loc.setPitch((float) pi);
 	         	p.teleport(loc);
 			}
-		}else{
-			File file = new File("plugins/ServerManager", "messages.yml");
-			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-			String KeineRechte = cfg.getString("messages.default.no permissions");
-			KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
-			p.sendMessage("§4[§1SM§4]: " + KeineRechte);
-		}
 		if (p.hasPlayedBefore()) {
 			return;
 		} else {
-			File filep = new File("plugins/ServerManager", "player.yml");
+			File filep = new File("plugins/ServerManager/Players", p.getName() + ".yml");
 			FileConfiguration cfgp = YamlConfiguration.loadConfiguration(filep);
 			String str = "Players." + p.getName() + ".";
 			cfgp.set(str + "Godmode", false);
@@ -82,6 +124,7 @@ public class PlayerEvents implements Listener{
 			} catch (IOException ex) {}
 			System.out.println("[Servermanager]: The Player '" + p + "' has been saved!");
 		}
+	}
 		
 	}
 	

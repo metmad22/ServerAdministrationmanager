@@ -118,7 +118,7 @@ public class homeCommand implements CommandExecutor {
 		    		}
 				}else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
 					if (p.hasPermission("sm.home.remove")) {
-		    				 cfgw.set("Home." + args[1], null);
+		    				 cfgw.set("Homes." + args[1], null);
 		    				 try {
 								cfgw.save(filew);
 								String removeWarp = cfg.getString("messages.Teleport.Home removed");

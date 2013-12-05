@@ -33,7 +33,7 @@ public class fireworkCommand implements CommandExecutor{
 			}
 			if (!p.hasPermission("sm.shootfw")) {
 				p.sendMessage(Main.prefix + Main.KeineRechte);
-			}
+			}else{
 			if (args.length == 0) {
 				Firework fw = (Firework) p.getWorld().spawn(p.getLocation(),Firework.class);
 				FireworkMeta fn = fw.getFireworkMeta();
@@ -66,6 +66,7 @@ public class fireworkCommand implements CommandExecutor{
 				int power = r.nextInt(2)+1;
 				fn.setPower(power);
 				fw.setFireworkMeta(fn);
+			}
 			}
 		}
 		return true;

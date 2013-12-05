@@ -28,7 +28,7 @@ public class bigtreeCommand implements CommandExecutor{
 			}
 			if (!p.hasPermission("sm.bigtree")) {
 				p.sendMessage(Main.prefix + Main.KeineRechte);
-			}
+			}else{
 			if ((args.length > 0) && (args[0].equalsIgnoreCase("redwood"))) {
 				tree = TreeType.TALL_REDWOOD;
 				
@@ -65,6 +65,8 @@ public class bigtreeCommand implements CommandExecutor{
 				
 				Location loc = new Location(Bukkit.getWorld(w), x, y, z);
 				p.getWorld().generateTree(loc, tree);
+			}
+			
 			}
 			
 		}

@@ -1,6 +1,7 @@
+#Please let the usage free, i don´t use it!
 name: ServerManager
-version: 2.2_BETA
-author: Minecraftair
+version: 3.0 BETA
+author: Minecraftair | medmat22
 main: de.GamerWorld.SM.Main.Main
 
 commands: 
@@ -32,7 +33,7 @@ commands:
     aliases: [CC, ChatClear]
   head:
     description: Spawn an head of the named Player!
-    usage: /head player <playername>
+    usage: /head <playername>
   warp:
     description: Warp you!
     usage: /warp <warpname>
@@ -48,6 +49,7 @@ commands:
   unban:
     description: Unban an Player if you think he leard his lesson!
     usage:
+    aliases: [pardon]
   fly:
     descroption: Fly in the Survivalmode with this command!
     usage:
@@ -76,4 +78,53 @@ commands:
     usage: 
   bigtree:
     description: Spawn an bigtree!
+    usage:
+  heal:
+    description: Heal you or another player!
+    usage:
+  feed:
+    description: Feed your self!
+    usage:
+  broadcast:
+    description: Broadcast an message to all Player!
+    usage:
+  burn:
+    description: Burn an Player
+    usage: /burn <Player> <Time>
+  hat:
+    description: Give an new hat!
+    usage:
+  spawnbook:
+    description: Save an startbook!
+    usage:
+  fireball:
+    description: Fire an Fireball !
+    usage:
+  book:
+    description: Save an book for other Player!
+    usage:
+  getpos:
+    description: Get the Locations of an other Player!
+    usage:
+  invsee:
+    description: See the Inventory of an other Player!
+    usage:
+  give:
+    description: Give an Player an Item!
+    usage:
+  item:
+    description: Give yourself an Item!
+    usage:
+    aliases: [i]
+  kick:
+    description: Kick an player
+    usage:
+  tp:
+    description: Teleport to an Player
+    usage:
+  tpall:
+    description: Teleport all player to you!
+    usage:
+  tphere:
+    description: Teleport an Player to you
     usage:

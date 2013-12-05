@@ -34,7 +34,7 @@ public class gamemodeCommand implements CommandExecutor
 		        if (!p.hasPermission("sm.gamemode")) {
 		        	p.sendMessage(Main.prefix + Main.KeineRechte);
 		        	return true;
-		        }
+		        }else{
 		        if ((sender instanceof Player) && (args.length == 2)) {
 		          if (Bukkit.getPlayer(args[1]) != null) {
 		            Player target = Bukkit.getPlayer(args[1]);
@@ -96,6 +96,8 @@ public class gamemodeCommand implements CommandExecutor
 		            		
 		            	}
 		            }
+		            
+		          }
 		            return true;
 		          }
 		          sender.sendMessage(Main.prefixb + Main.Playerdnx);

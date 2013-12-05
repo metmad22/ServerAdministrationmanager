@@ -35,15 +35,17 @@ public class gmCommand  implements CommandExecutor
 			}
 			if (!p.hasPermission("sm.gamemode.own")) {
 				p.sendMessage(Main.prefix + Main.KeineRechte);
+			}else{
+			
+				if(!p.getGameMode().equals(GameMode.SURVIVAL)) {
+    				p.setGameMode(GameMode.SURVIVAL);
+				}else{
+					String Isan = cfgm.getString("messages.Gamemode.Is same as now");
+					Isan = ChatColor.translateAlternateColorCodes('&', Isan);
+					Isan = Isan.replace("%gamemode%", "SURVIVAL");
+					p.sendMessage(Main.prefixb + Isan);	            		
+				}
 			}
-			if(!p.getGameMode().equals(GameMode.SURVIVAL)) {
-    			p.setGameMode(GameMode.SURVIVAL);
-    		}else{
-    			String Isan = cfgm.getString("messages.Gamemode.Is same as now");
-    			Isan = ChatColor.translateAlternateColorCodes('&', Isan);
-        		Isan = Isan.replace("%gamemode%", "SURVIVAL");
-    			p.sendMessage(Main.prefixb + Isan);	            		
-    		}
 		}
 		if (cmd.getName().equalsIgnoreCase("gmc")) {
 			Player p = (Player)cs;
@@ -52,7 +54,7 @@ public class gmCommand  implements CommandExecutor
 			}
 			if (!p.hasPermission("sm.gamemode.own")) {
 				p.sendMessage(Main.prefix + Main.KeineRechte);
-			}
+			}else{
 			if (!p.getGameMode().equals(GameMode.CREATIVE)) {
     			p.setGameMode(GameMode.CREATIVE);
     		}else{
@@ -62,6 +64,7 @@ public class gmCommand  implements CommandExecutor
     			p.sendMessage(Main.prefixb + Isan);	            		
     		}
 		}
+		}
 		if (cmd.getName().equalsIgnoreCase("gma")) {
 			Player p = (Player)cs;
 			if (p == null) {
@@ -69,7 +72,7 @@ public class gmCommand  implements CommandExecutor
 			}
 			if (!p.hasPermission("sm.gamemode.own")) {
 				p.sendMessage(Main.prefix + Main.KeineRechte);
-			}
+			}else{
 			if (!p.getGameMode().equals(GameMode.ADVENTURE)) {
     			p.setGameMode(GameMode.ADVENTURE);
     		}else{
@@ -78,6 +81,8 @@ public class gmCommand  implements CommandExecutor
         		Isan = Isan.replace("%gamemode%", "ADVENTURE");
     			p.sendMessage(Main.prefixb + Isan);	            		
     		}
+		
+		}
 		}
 		
 		return true;

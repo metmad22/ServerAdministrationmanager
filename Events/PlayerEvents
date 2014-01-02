@@ -162,7 +162,7 @@ public class PlayerEvents implements Listener{
     				String str = "Homes.home.";
     				World w = Bukkit.getWorld(cfgw.getString(str + "world"));
     				if (w == null) {
-    					p.sendMessage("§4[§1SM§4]: Error! The world does not exists any more!");
+    					p.sendMessage("§4[§1SM§4]: Error! The world does not exist any more!");
     				}
     				double x = cfgw.getDouble(str + "X");
     				double y = cfgw.getDouble(str + "Y");
@@ -173,9 +173,9 @@ public class PlayerEvents implements Listener{
     				Location loc = new Location(w, x, y, z, (float) yaw, (float) pi);
     				p.teleport(loc);
     				
-    				p.sendMessage("§l§7[§4!§7]:§r §6You have died! To get to your last location do /back");
+    				p.sendMessage("§l§7[§4!§7]:§r §6You have died! To get back to your last location do /back");
 				}catch (NullPointerException exc) {
-					p.sendMessage("§l§7[§4!§7]:§r §4You don´t set an homepoint! Please sleep in an bed!");
+					p.sendMessage("§l§7[§4!§7]:§r §4You havn't set a homepoint! Please sleep in an bed!");
 					p.performCommand("hub");
 				}
 		} else {

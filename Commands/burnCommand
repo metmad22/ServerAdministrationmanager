@@ -1,0 +1,63 @@
+package me.ModMakerGroup.SM.Commands;
+
+import java.io.File;
+
+import me.ModMakerGroup.SM.ServerManager;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+public class burnCommand implements CommandExecutor{
+	
+	ServerManager main;
+	
+	public burnCommand(ServerManager sm) {
+		this.main = sm;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		Player p = (Player)cs;
+		if (!(cs instanceof Player)) {
+			return true;
+		}			
+		if (p == null) {
+			return true;
+		}
+		if (!p.hasPermission("sm.burn")) {
+			p.sendMessage(ServerManager.prefix + ServerManager.KeineRechte);
+			return true;
+		}else{
+			if (args.length == 2) {
+				Player P = Bukkit.getPlayer(args[0]);
+				P.setFireTicks(Integer.parseInt(args[1]) * 20);
+				File filem = null;
+		    	if (main.getConfig().getString("General.Language").equals("en_EN")) {
+		    		filem = new File("plugins/ServerManager/Languages", "en_EN.yml");
+		    	} else if (main.getConfig().getString("General.Language").equals("de_DE")) {
+		    		filem = new File("plugins/ServerManager/Languages", "de_DE.yml");
+		    	} else if (main.getConfig().getString("General.Language").equals("es_ES")) {
+		    		filem = new File("plugins/ServerManager/Languages", "es_ES.yml");
+		    	}
+		    	FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);	  
+				String burned = cfgm.getString("General.Burned Player");
+				burned = ChatColor.translateAlternateColorCodes('&', burned);
+				burned = burned.replace("%player%", P.getName());
+				p.sendMessage(ServerManager.prefixb + burned);
+			} else {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+}

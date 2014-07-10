@@ -1,0 +1,46 @@
+package me.ModMakerGroup.SM.Commands;
+
+import me.ModMakerGroup.SM.ServerManager;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
+
+public class feedCommand implements CommandExecutor{
+	
+	ServerManager main;
+	
+	public feedCommand(ServerManager sm) {
+		this.main = sm;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		if (cmd.getName().equals("feed")) {
+			Player p = (Player)cs;
+			if (p == null) {
+				return true;
+			}
+			if (!p.hasPermission("sm.feed")) {
+				p.sendMessage(ServerManager.prefix + ServerManager.KeineRechte);
+				return true;
+			}else{
+				if (cs instanceof Player) {
+					if (args.length == 0) {
+						p.setFoodLevel(20);
+						p.removePotionEffect(PotionEffectType.HUNGER);
+					} else if (args.length == 1) {
+						Player P = Bukkit.getPlayer(args[0]);
+						P.setFoodLevel(20);
+						P.removePotionEffect(PotionEffectType.HUNGER);
+					}
+				}
+			}
+		}
+		return false;
+	}
+}

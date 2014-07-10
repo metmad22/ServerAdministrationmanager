@@ -1,0 +1,39 @@
+package me.ModMakerGroup.SM.Commands;
+
+import me.ModMakerGroup.SM.MainManager;
+import me.ModMakerGroup.SM.ServerManager;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class broadcastCommand implements CommandExecutor{
+	
+	ServerManager main;	
+	public broadcastCommand(ServerManager sm) {
+		this.main = sm;
+	}
+
+	@Override
+	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+		Player p = (Player)cs;
+		if (!(cs instanceof Player)) {
+			return true;
+		}			
+		if (p == null) {
+			return true;
+		}
+		if (!p.hasPermission("sm.broadcast")) {
+			p.sendMessage(ServerManager.prefix + ServerManager.KeineRechte);
+			return true;
+		}else{
+				MainManager manager = new MainManager(this.main);
+				String msg = manager.getBroadcastMessage(args);
+				Bukkit.broadcastMessage("§5[§4" + p.getName() + "§5]:§f" + msg);
+				return true;		
+		}
+	}
+
+}

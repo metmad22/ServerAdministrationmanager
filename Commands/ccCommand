@@ -1,6 +1,8 @@
-package de.GamerWorld.SM.Commands;
+package me.ModMakerGroup.SM.Commands;
 
 import java.io.File;
+
+import me.ModMakerGroup.SM.ServerManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,12 +15,24 @@ import org.bukkit.entity.Player;
 
 public class ccCommand implements CommandExecutor {
 	
+	ServerManager main;
+	public ccCommand(ServerManager sm) {
+		this.main = sm;
+	}
+	
 	@Override
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("cc")) {
 			Player p = (Player)cs;
-			File file = new File("plugins/ServerManager", "messages.yml");
-			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+			File filem = null;
+	    	if (main.getConfig().getString("General.Language").equals("en_EN")) {
+	    		filem = new File("plugins/ServerManager/Languages", "en_EN.yml");
+	    	} else if (main.getConfig().getString("General.Language").equals("de_DE")) {
+	    		filem = new File("plugins/ServerManager/Languages", "de_DE.yml");
+	    	} else if (main.getConfig().getString("General.Language").equals("es_ES")) {
+	    		filem = new File("plugins/ServerManager/Languages", "es_ES.yml");
+	    	}
+	    	FileConfiguration cfgm = YamlConfiguration.loadConfiguration(filem);
     			if (p.hasPermission("sm.cc")) {
     				Bukkit.broadcastMessage(" ");
     				Bukkit.broadcastMessage(" ");
@@ -142,16 +156,15 @@ public class ccCommand implements CommandExecutor {
     				Bukkit.broadcastMessage(" ");
     				Bukkit.broadcastMessage(" ");
     				Bukkit.broadcastMessage(" ");
-    				String SMCC = cfg.getString("messages.Chat.ChatCleaner");
-    				SMCC = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.Chat.ChatCleaner"));
+    				String SMCC = cfgm.getString("Chat.ChatCleaner");
+    				SMCC = ChatColor.translateAlternateColorCodes('&', cfgm.getString("Chat.ChatCleaner"));
     				cs.sendMessage("§l§7[§4!§7]:§r " + SMCC);
 				}else{
-					String KeineRechte = cfg.getString("messages.default.no permissions");
-					KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString("messages.default.no permissions"));
-					p.sendMessage("§4[§1SM§4]: " +  KeineRechte);
+					p.sendMessage("§4[§1SM§4]: " +  ServerManager.KeineRechte);
 				}
 			}		
 		return true;
 	}
 
 }
+

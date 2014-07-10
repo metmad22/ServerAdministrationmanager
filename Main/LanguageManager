@@ -1,0 +1,773 @@
+package me.ModMakerGroup.SM;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+public class LanguageManager {
+	
+	ServerManager main;
+	public LanguageManager(ServerManager sm) {
+		this.main = sm;
+	}
+
+	public void loadenEN() {
+	    File file = new File("plugins/ServerManager/Languages", "en_EN.yml");
+	    FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+	    try{cfg.save(new File("plugins/ServerManager/Languages", "en_EN.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");return;}
+
+	    String string1 = "General.No Permissions";
+	    cfg.addDefault(string1, "&4You don´t have the &lPermissions&r&4 das zu tun!");
+
+	    String string2 = "Chat.ChatCleaner";
+	    cfg.addDefault(string2, "&2The Chat has been cleared!");
+
+	    String string3 = "Teleport.Teleport to spawn";
+	    cfg.addDefault(string3, "&2You have been teleported to the spawn!");
+
+	    String string5 = "General.No book in Hand";
+	    cfg.addDefault(string5, "&cYou have to have an book in your hand!");
+
+	    String string6 = "General.Book saved";
+	    cfg.addDefault(string6, "&2The Spawnbook has saved!");
+
+	    String string8 = "Time.Set to Day";
+	    cfg.addDefault(string8, "&2The time has been set to &lDay&r&2!");
+
+	    String string9 = "Time.Set to Night";
+	    cfg.addDefault(string9, "&2The time has been set to &lNight&r&2!");
+
+	    String string10 = "Teleport.Back";
+	    cfg.addDefault(string10, "&2You have been teleported back to your last location!");
+
+	    String string11 = "Inventory.Inventory cleared";
+	    cfg.addDefault(string11, "&2Your inventory has been cleared!");
+
+	    String string12 = "Inventory.Player not online";
+	    cfg.addDefault(string12, "&cThe Player is not online!");
+
+	    String string13 = "Teleport.Kompass deactivated";
+	    cfg.addDefault(string13, "&4The Teleportcompass is deactivated!");
+
+	    String string14 = "Teleport.Teleport to Hall of Fame";
+	    cfg.addDefault(string14, "&2You have been teleported to the Hall of Fame!");
+
+	    String string15 = "Heads.Get Head";
+	    cfg.addDefault(string15, "&2You got an head from &l%player%&r&2!");
+
+	    String string16 = "Teleport.Warp already exists";
+	    cfg.addDefault(string16, "&cThe Warp '%warpname%' already exists!");
+
+	    String string17 = "Teleport.Teleported to the Warp";
+	    cfg.addDefault(string17, "&2You have been teleportet to the warp '%warpname%'!");
+
+	    String string18 = "Teleport.Warp does not exists";
+	    cfg.addDefault(string18, "&cThe Warp '%warpname%' does not exist!");
+
+	    String string19 = "Teleport.Warp removed";
+	    cfg.addDefault(string19, "&6The Warp '%warpname%' has been removed!");
+
+	    String string20 = "General.Command does not exists!";
+	    cfg.addDefault(string20, "&7The Commad does not exists! &a[%command%]");
+
+	    String string21 = "General.Reload.Before reload.Line 1";
+	    cfg.addDefault(string21, "&4Reload starting! Lagging is normal!");
+
+	    String string22 = "General.Reload.Before reload.Line 2";
+	    cfg.addDefault(string22, "&cPlease fill the line!");
+
+	    String string23 = "General.Reload.Before reload.Line 3";
+	    cfg.addDefault(string23, "&cPlease fill the line!");
+
+	    String string24 = "General.Reload.Before reload.Line 4";
+	    cfg.addDefault(string24, "&cPlease fill the line!");
+
+	    String string25 = "General.Reload.Before reload.Line 5";
+	    cfg.addDefault(string25, "&cPlease fill the line!");
+
+	    String string26 = "General.Reload.After reload.Line 1";
+	    cfg.addDefault(string26, "&2Reload finished! You can play normal again!");
+
+	    String string27 = "General.Reload.After reload.Line 2";
+	    cfg.addDefault(string27, "&cPlease fill the line!");
+
+	    String string28 = "General.Reload.After reload.Line 3";
+	    cfg.addDefault(string28, "&cPlease fill the line!");
+
+	    String string29 = "General.Reload.After reload.Line 4";
+	    cfg.addDefault(string29, "&cPlease fill the line!");
+
+	    String string30 = "General.Reload.After reload.Line 5";
+	    cfg.addDefault(string30, "&cPlease fill the line!");
+
+	    String string31 = "Teleport.Teleported to the Home";
+	    cfg.addDefault(string31, "&2You have been teleported to the home '%homename%'");
+
+	    String string32 = "Teleport.Home does not exists";
+	    cfg.addDefault(string32, "&cThe home '%homename%' does not exists!");
+
+	    String string33 = "Teleport.Home removed";
+	    cfg.addDefault(string33, "&6The Home '%homename%' have benn removed!");
+
+	    String string36 = "Ban.Unbanmessage";
+	    cfg.addDefault(string36, "&6The Player %player% has been unbanned!");
+
+	    String string37 = "Ban.Not Banned";
+	    cfg.addDefault(string37, "&cThe Player %player% is not banned!");
+
+	    String string38 = "Gamemode.Change";
+	    cfg.addDefault(string38, "&7Your Gamemode has been changed to %gamemode%!");
+
+	    String string39 = "Gamemode.Change other";
+	    cfg.addDefault(string39, "&7You changed the gamemode of %player% to %gamemode%!");
+
+	    String string40 = "Gamemode.Is same as now";
+	    cfg.addDefault(string40, "&7The Gamemode has &nnot&r&7 been set to %gamemode%!");
+
+	    String string41 = "General.Healed";
+	    cfg.addDefault(string41, "&7You have been healed!");
+
+	    String string42 = "General.Heald Player";
+	    cfg.addDefault(string42, "&7You healed %player%!");
+
+	    String string43 = "General.Burned Player";
+	    cfg.addDefault(string43, "&7You burned the Player %player%!");
+
+	    String string44 = "Kick.Kick Broadcast";
+	    cfg.addDefault(string44, "&6The Player &4&l%player%&r&6 was been kicked by %kicker% for &4%reason%&6 from the Server!");
+
+	    String string45 = "Nick.Changed";
+	    cfg.addDefault(string45, "&7Your name has been changed to %nickname%.");
+
+	    String string46 = "MinigamesManager.Plugin deactivated";
+	    cfg.addDefault(string46, "&eThis Plugin is deactivated!");
+
+	    String string47 = "MinigamesManager.Infopoint deactivated";
+	    cfg.addDefault(string47, "&eThe &lInfopoint&r&e is deactivated!");
+
+	    String string48 = "MinigamesManager.Minigames-Teleportpunkt deactivated";
+	    cfg.addDefault(string48, "&eThe &lMinigamesspawn&r&e is deactivated!");
+	    
+	    String string62 = "MinigamesManager.Kompass deactivated";
+	    cfg.addDefault(string62, "&2The Minigames-Inventory is deactivated!");
+
+	    String string49 = "MinigamesManager.Teleport to the Infopoint";
+	    cfg.addDefault(string49, "&2You have been teleported to the Infopoint!");
+
+	    String string50 = "MinigamesManager.Teleport to the Minigames";
+	    cfg.addDefault(string50, "&2You have been teleported to the Minigames!");
+	    
+	    String string51 = "MinigamesManager.Teleport to Paintball";
+	    cfg.addDefault(string51, "&2You have been teleported to Paintball!");
+	    
+	    String string52 = "MinigamesManager.Teleport to Paintball War Edition";
+	    cfg.addDefault(string52, "&2You have been teleported to Paintball!");
+	    
+	    String string53 = "MinigamesManager.Teleport zu BlockHunt";
+	    cfg.addDefault(string53, "&2You have been teleported to BlockHunt!");
+	    
+	    String string54 = "MinigamesManager.Teleport to Quicksand";
+	    cfg.addDefault(string54, "&2You have been teleported to Quicksand!");
+	    
+	    String string55 = "MinigamesManager.Teleport to TNTRun";
+	    cfg.addDefault(string55, "&2You have been teleported to TNTRun!");
+	    
+	    String string56 = "MinigamesManager.Teleport zu PaintWar";
+	    cfg.addDefault(string56, "&2You have been teleported to PaintWar!");
+	    
+	    String string57 = "MinigamesManager.Teleport to HeavySpleef";
+	    cfg.addDefault(string57, "&2You have been teleported to HeavySpleef!");
+	    
+	    String string58 = "MinigamesManager.Teleport to SurvivalGames";
+	    cfg.addDefault(string58, "&2You have been teleported to SurvivalGames!");
+	    
+	    String string59 = "MinigamesManager.Teleport to HungarGames";
+	    cfg.addDefault(string59, "&2You have been teleported to HungarGames!");
+	    
+	    String string60 = "MinigamesManager.Teleport to Splegg";
+	    cfg.addDefault(string60, "&2You have been teleported to Splegg!");
+	    
+	    String string61 = "MinigamesManager.Teleport to Hot Potato";
+	    cfg.addDefault(string61, "&2You have been teleported to Hot Potato!");
+	    
+	    String string63 = "General.Security.Website and IP filter";
+	    cfg.addDefault(string63, "&4You are not allowed to write links or Server IPs in the Chat!!!");
+	    
+	    String string64 = "Deathmessages.Cause.Entity.Kill";
+	    cfg.addDefault(string64, "&7%player% was killed by a/an %entity%!");
+	    
+	    String string65 = "Deathmessages.Cause.Entity.Shoot";
+	    cfg.addDefault(string65, "&7%player% was shot by a %shooter%!");
+	    
+	    String string66 = "Deathmessages.Cause.Entity.Explode";
+	    cfg.addDefault(string66, "&7%player% was blowen up by a %exploder%!");
+	    
+	    String string67 = "Deathmessages.Cause.Entity.Player";
+	    cfg.addDefault(string67, "&7%player% was killed by %killer%!");
+	    
+	    String string68 = "Deathmessages.Cause.Cactus";
+	    cfg.addDefault(string68, "&7%player% was pierced by a Cactus!");
+	    
+	    String string69 = "Deathmessages.Cause.Drowning";
+	    cfg.addDefault(string69, "&7%player% drowned.");
+	    
+	    String string70 = "Deathmessages.Cause.Fall";
+	    cfg.addDefault(string70, "&7%player% was doomed to fall!");
+	    
+	    String string71 = "Deathmessages.Cause.Anvil";
+	    cfg.addDefault(string71, "&7%player% was killed by an falling anvil!");
+	    
+	    String string72 = "Deathmessages.Cause.Fire";
+	    cfg.addDefault(string72, "&7%player% burned to death!");
+	    
+	    String string73 = "Deathmessages.Cause.Lava";
+	    cfg.addDefault(string73, "&7%player% felt in lava!");
+	    
+	    String string74 = "Deathmessages.Cause.Lightning";
+	    cfg.addDefault(string74, "&7%player% was hitten by a lightning!");
+	    
+	    String string75 = "Deathmessages.Cause.Magic";
+	    cfg.addDefault(string75, "&7%player% was killed by magic!");
+	    
+	    String string76 = "Deathmessages.Cause.Poison";
+	    cfg.addDefault(string76, "&7%player% got embittered!");
+	    
+	    String string77 = "Deathmessages.Cause.Suffocation";
+	    cfg.addDefault(string77, "&7%player% suffocated in a wall!");
+	    
+	    String string78 = "Deathmessages.Cause.Suicide";
+	    cfg.addDefault(string78, "&7Why did you done that, %player%?");
+	    
+	    String string79 = "Deathmessages.Cause.Thorns";
+	    cfg.addDefault(string79, "&7%player% runned into thorns.");
+	    
+	    String string80 = "Deathmessages.Cause.Void";
+	    cfg.addDefault(string80, "&7%player% felt into the void!");
+	    
+	    String string81 = "Deathmessages.Cause.Withereffect";
+	    cfg.addDefault(string81, "&7%player% was killed by the bad withereffect!");
+	    
+	    String string82 = "General.FirstJoin.Line 1";
+	    cfg.addDefault(string82, "&aThe player &e%player% &ajoined this Server for the first time.");
+	    
+	    String string83 = "General.FirstJoin.Line 2";
+	    cfg.addDefault(string83, "&aWelcome, %player%!");
+	    
+	    cfg.options().copyDefaults(true);
+	    cfg.options().header("This is the messages file of ServerManager. You can change the messages here."
+	    		+ "\nThe ColorCodes are with &");
+
+	    ServerManager.KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString(string1));
+	    
+	    try{cfg.save(new File("plugins/ServerManager/Languages", "en_EN.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");return;}
+	}
+	
+	public void loaddeDE() {
+	    File file = new File("plugins/ServerManager/Languages", "de_DE.yml");
+	    FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+	    try{cfg.save(new File("plugins/ServerManager/Languages", "de_DE.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");return;}
+
+	    String string1 = "General.No Permissions";
+	    cfg.addDefault(string1, "&4Du hast nicht die &lRechte&r&4 to do that!");
+
+	    String string2 = "Chat.ChatCleaner";
+	    cfg.addDefault(string2, "&2Der Chat wurde geleert!");
+
+	    String string3 = "Teleport.Teleport to spawn";
+	    cfg.addDefault(string3, "&2Du wurdest zum Spawn teleportiert!");
+
+	    String string5 = "General.No book in Hand";
+	    cfg.addDefault(string5, "&cDu hast kein Buch in der Hand!");
+
+	    String string6 = "General.Book saved";
+	    cfg.addDefault(string6, "&2Das Spawnbuch wurde gesaved!");
+
+	    String string8 = "Time.Set to Day";
+	    cfg.addDefault(string8, "&2Es ist jetzt &lTag&r&2!");
+
+	    String string9 = "Time.Set to Night";
+	    cfg.addDefault(string9, "&2Es ist jetzt &lNacht&r&2!");
+
+	    String string10 = "Teleport.Back";
+	    cfg.addDefault(string10, "&2Du bist zu deinem letzten Ort zurückgekehrt!");
+
+	    String string11 = "Inventory.Inventory cleared";
+	    cfg.addDefault(string11, "&2Dein Inventar wurde geleert!");
+
+	    String string12 = "Inventory.Player not online";
+	    cfg.addDefault(string12, "&cDer Spieler ist nicht online!");
+
+	    String string13 = "Teleport.Kompass deactivated";
+	    cfg.addDefault(string13, "&4Der Teleportkompass ist deaktiviert!");
+
+	    String string14 = "Teleport.Teleport to Hall of Fame";
+	    cfg.addDefault(string14, "&2Du wurdest zur Hall of Fame teleportiert!");
+
+	    String string15 = "Heads.Get Head";
+	    cfg.addDefault(string15, "&2Du hast den Kopf von &l%player%&r&2 erhalten!");
+
+	    String string17 = "Teleport.Teleported to the Warp";
+	    cfg.addDefault(string17, "&2Du wurdest zum Warp '%warpname%' teleportiert!");
+
+	    String string16 = "Teleport.Warp already exists";
+	    cfg.addDefault(string16, "&cDer Warp '%warpname%' exsistiert schon!");
+
+	    String string18 = "Teleport.Warp does not exists";
+	    cfg.addDefault(string18, "&cDer Warp '%warpname%' exsistiert nicht!");
+
+	    String string19 = "Teleport.Warp removed";
+	    cfg.addDefault(string19, "&6Der Warp '%warpname%' wurde gelöscht!");
+
+	    String string20 = "General.Command does not exists!";
+	    cfg.addDefault(string20, "&7Der Command exsistiert nicht! &a[%command%]");
+
+	    String string21 = "General.Reload.Before reload.Line 1";
+	    cfg.addDefault(string21, "&4Reload startet! Es könnte zu Laggs kommen!");
+
+	    String string22 = "General.Reload.Before reload.Line 2";
+	    cfg.addDefault(string22, "&cPlease fill the line!");
+
+	    String string23 = "General.Reload.Before reload.Line 3";
+	    cfg.addDefault(string23, "&cPlease fill the line!");
+
+	    String string24 = "General.Reload.Before reload.Line 4";
+	    cfg.addDefault(string24, "&cPlease fill the line!");
+
+	    String string25 = "General.Reload.Before reload.Line 5";
+	    cfg.addDefault(string25, "&cPlease fill the line!");
+
+	    String string26 = "General.Reload.After reload.Line 1";
+	    cfg.addDefault(string26, "&2Reload beendet! Du kannst nun normal weiterspielen!");
+
+	    String string27 = "General.Reload.After reload.Line 2";
+	    cfg.addDefault(string27, "&cPlease fill the line!");
+
+	    String string28 = "General.Reload.After reload.Line 3";
+	    cfg.addDefault(string28, "&cPlease fill the line!");
+
+	    String string29 = "General.Reload.After reload.Line 4";
+	    cfg.addDefault(string29, "&cPlease fill the line!");
+
+	    String string30 = "General.Reload.After reload.Line 5";
+	    cfg.addDefault(string30, "&cPlease fill the line!");
+
+	    String string31 = "Teleport.Teleported to the Home";
+	    cfg.addDefault(string31, "&2Du wurdest zu deinem Home '%homename%' teleportiert!");
+
+	    String string32 = "Teleport.Home does not exists";
+	    cfg.addDefault(string32, "&cDas Home '%homename%' exsistiert nicht!");
+
+	    String string33 = "Teleport.Home removed";
+	    cfg.addDefault(string33, "&6Dein Home '%homename%' wurde gelöscht!");
+
+	    String string36 = "Ban.Unbanmessage";
+	    cfg.addDefault(string36, "&6Der Spieler %player% wurde begnadigt!");
+
+	    String string37 = "Ban.Not Banned";
+	    cfg.addDefault(string37, "&cDer Spieler %player% ist nicht gebannt!");
+
+	    String string38 = "Gamemode.Change";
+	    cfg.addDefault(string38, "&7Dein Spielmodus ist nun %gamemode%!");
+
+	    String string39 = "Gamemode.Change other";
+	    cfg.addDefault(string39, "&7Du hast den Spielmodus von %player% zu %gamemode% gesetzt!");
+
+	    String string40 = "Gamemode.Is same as now";
+	    cfg.addDefault(string40, "&7Der Spielmodus wurde &nnicht&r&7 zu %gamemode% gesetzt!");
+
+	    String string41 = "General.Healed";
+	    cfg.addDefault(string41, "&7Du wurdest geheilt!");
+
+	    String string42 = "General.Heald Player";
+	    cfg.addDefault(string42, "&7Du hast %player% geheilt!");
+
+	    String string43 = "General.Burned Player";
+	    cfg.addDefault(string43, "&7Du hast %player% in Flammen gesetzt!");
+
+	    String string44 = "Kick.Kick Broadcast";
+	    cfg.addDefault(string44, "&6Der Spieler &4&l%player%&r&6 wurde von %kicker% für &4%reason%&6 vom Server gekickt!");
+
+	    String string45 = "Nick.Changed";
+	    cfg.addDefault(string45, "&7Du heißt nun %nickname%.");
+	    
+	    String string46 = "MinigamesManager.Plugin deactivated";
+	    cfg.addDefault(string46, "&eDas Plugin ist deaktiviert!");
+
+	    String string47 = "MinigamesManager.Infopoint deactivated";
+	    cfg.addDefault(string47, "&eDer &lInfopoint&r&e ist deaktiviert!");
+
+	    String string48 = "MinigamesManager.Minigames-Teleportpunkt deactivated";
+	    cfg.addDefault(string48, "&eDer &lMinigamesspawn&r&e ist deaktiviert!");
+	    
+	    String string62 = "MinigamesManager.Kompass deactivated";
+	    cfg.addDefault(string62, "&2Das Minigames-Inventar ist deaktiviert!");
+
+	    String string49 = "MinigamesManager.Teleport to the Infopoint";
+	    cfg.addDefault(string49, "&2Du wurdest zum Infopoint teleportiert!");
+
+	    String string50 = "MinigamesManager.Teleport to the Minigames";
+	    cfg.addDefault(string50, "&2Du wurdest zu den Minigames teleportiert!");
+	    
+	    String string51 = "MinigamesManager.Teleport to Paintball";
+	    cfg.addDefault(string51, "&2Du wurdest zu Paintball teleportiert!");
+	    
+	    String string52 = "MinigamesManager.Teleport to Paintball War Edition";
+	    cfg.addDefault(string52, "&2Du wurdest zu Paintball teleportiert!");
+	    
+	    String string53 = "MinigamesManager.Teleport zu BlockHunt";
+	    cfg.addDefault(string53, "&2Du wurdest zu BlockHunt teleportiert!");
+	    
+	    String string54 = "MinigamesManager.Teleport to Quicksand";
+	    cfg.addDefault(string54, "&2Du wurdest zu Quicksand teleportiert!");
+	    
+	    String string55 = "MinigamesManager.Teleport to TNTRun";
+	    cfg.addDefault(string55, "&2Du wurdest zu TNTRun teleportiert!");
+	    
+	    String string56 = "MinigamesManager.Teleport zu PaintWar";
+	    cfg.addDefault(string56, "&2Du wurdest zu PaintWar teleportiert!");
+	    
+	    String string57 = "MinigamesManager.Teleport to HeavySpleef";
+	    cfg.addDefault(string57, "&2Du wurdest zu HeavySpleef teleportiert!");
+	    
+	    String string58 = "MinigamesManager.Teleport to SurvivalGames";
+	    cfg.addDefault(string58, "&2Du wurdest zu SurvivalGames teleportiert!");
+	    
+	    String string59 = "MinigamesManager.Teleport to HungarGames";
+	    cfg.addDefault(string59, "&2Du wurdest zu HungarGames teleportiert!");
+	    
+	    String string60 = "MinigamesManager.Teleport to Splegg";
+	    cfg.addDefault(string60, "&2Du wurdest zu Splegg teleportiert!");
+	    
+	    String string61 = "MinigamesManager.Teleport to Hot Potato";
+	    cfg.addDefault(string61, "&2Du wurdest zu Hot Potato teleportiert!");
+	    
+	    String string63 = "General.Security.Website and IP filter";
+	    cfg.addDefault(string63, "&4Du darfst keine Links oder ServerIPs in den Chat schreiben!!!");
+	    
+	    String string64 = "Deathmessages.Cause.Entity.Kill";
+	    cfg.addDefault(string64, "&7%player% wurde von einer/m %entity% getötet!");
+	    
+	    String string65 = "Deathmessages.Cause.Entity.Shoot";
+	    cfg.addDefault(string65, "&7%player% wurde von einer/m %shooter% erschossen!");
+	    
+	    String string66 = "Deathmessages.Cause.Entity.Explode";
+	    cfg.addDefault(string66, "&7%player% wurde von einer/m %exploder% in die Luft gejagt!");
+	    
+	    String string67 = "Deathmessages.Cause.Entity.Player";
+	    cfg.addDefault(string67, "&7%player% wurde von %killer% getötet!");
+	    
+	    String string68 = "Deathmessages.Cause.Cactus";
+	    cfg.addDefault(string68, "&7%player% wurde von einem Kaktus aufgespießt!");
+	    
+	    String string69 = "Deathmessages.Cause.Drowning";
+	    cfg.addDefault(string69, "&7%player% ist ertrunken.");
+	    
+	    String string70 = "Deathmessages.Cause.Fall";
+	    cfg.addDefault(string70, "&7%player% fiel in den Tot!");
+	    
+	    String string71 = "Deathmessages.Cause.Anvil";
+	    cfg.addDefault(string71, "&7%player% wurde von einem Amboss zerquetscht!");
+	    
+	    String string72 = "Deathmessages.Cause.Fire";
+	    cfg.addDefault(string72, "&7%player% verbrannte!");
+	    
+	    String string73 = "Deathmessages.Cause.Lava";
+	    cfg.addDefault(string73, "&7%player% schmolz in Lava!");
+	    
+	    String string74 = "Deathmessages.Cause.Lightning";
+	    cfg.addDefault(string74, "&7%player% wurde von einem Blitz getroffen!");
+	    
+	    String string75 = "Deathmessages.Cause.Magic";
+	    cfg.addDefault(string75, "&7%player% wurde von Magie getötet!");
+	    
+	    String string76 = "Deathmessages.Cause.Poison";
+	    cfg.addDefault(string76, "&7%player% wurde vergiftet!");
+	    
+	    String string77 = "Deathmessages.Cause.Suffocation";
+	    cfg.addDefault(string77, "&7%player% erstickte in einer Wand!");
+	    
+	    String string78 = "Deathmessages.Cause.Suicide";
+	    cfg.addDefault(string78, "&7Warum hast du das getan, %player%?");
+	    
+	    String string79 = "Deathmessages.Cause.Thorns";
+	    cfg.addDefault(string79, "&7%player% rannte in einen Dornenpanzer.");
+	    
+	    String string80 = "Deathmessages.Cause.Void";
+	    cfg.addDefault(string80, "&7%player% fiel ins Nichts!");
+	    
+	    String string81 = "Deathmessages.Cause.Withereffect";
+	    cfg.addDefault(string81, "&7%player% wurde vom Wither verseucht!");
+	    
+	    String string82 = "General.FirstJoin.Line 1";
+	    cfg.addDefault(string82, "&aDer Spieler &e%player% &aist zum ersten Mal dem Server beigetreten.");
+	    
+	    String string83 = "General.FirstJoin.Line 2";
+	    cfg.addDefault(string83, "&aHerzlich willkommen, %player%!");
+	    
+	    cfg.options().copyDefaults(true);
+	    cfg.options().header("Das ist die Textdatei von ServerManager. Hier können Sie die Nachrichten im Spiel verändern. "
+	    		+ "\nDie Farbcodes sind mit &!");
+
+	    ServerManager.KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString(string1));
+	    
+	    try{cfg.save(new File("plugins/ServerManager/Languages", "de_DE.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");return;}
+	
+	}
+	
+	public void loadesES() {
+		File file = new File("plugins/ServerManager/Languages", "es_ES.yml");
+	    FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+	    try{cfg.save(new File("plugins/ServerManager/Languages", "es_ES.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");return;}
+
+	    String string1 = "General.No Permissions";
+	    cfg.addDefault(string1, "¡&4No tienes los &lPermisos&r&4 para hacer eso!");
+
+	    String string2 = "Chat.ChatCleaner";
+	    cfg.addDefault(string2, "¡&2El chat se ha borrado!");
+
+	    String string3 = "Teleport.Teleport to spawn";
+	    cfg.addDefault(string3, "¡&2Has sido teletransportado al spawn!");
+
+	    String string5 = "General.No book in Hand";
+	    cfg.addDefault(string5, "¡&cNecesitas tener un libro a mano!");
+
+	    String string6 = "General.Book saved";
+	    cfg.addDefault(string6, "&2El Spawnbook se ha guardado.");
+
+	    String string8 = "Time.Set to Day";
+	    cfg.addDefault(string8, "¡&2El tiempo se ha puesto en &lDay&r&2!");
+
+	    String string9 = "Time.Set to Night";
+	    cfg.addDefault(string9, "¡&2El tiempo se ha puesto en &lNight&r&2!");
+
+	    String string10 = "Teleport.Back";
+	    cfg.addDefault(string10, "¡&2Has sido teleporteado al ultimo lugar donde estabas!");
+
+	    String string11 = "Inventory.Inventory cleared";
+	    cfg.addDefault(string11, "¡&2Tu inventario se ha limpiado!");
+
+	    String string12 = "Inventory.Player not online";
+	    cfg.addDefault(string12, "¡&cEl jugador no esta conectado!");
+
+	    String string13 = "Teleport.Kompass deactivated";
+	    cfg.addDefault(string13, "¡&4El Teleportcompass esta desactivado!");
+
+	    String string14 = "Teleport.Teleport to Hall of Fame";
+	    cfg.addDefault(string14, "¡&2Has sido teletransportado al Hall de la fama!");
+
+	    String string15 = "Heads.Get Head";
+	    cfg.addDefault(string15, "¡&2Has conseguido una cabeza de &l%player%&r&2!");
+
+	    String string17 = "Teleport.Teleported to the Warp";
+	    cfg.addDefault(string17, "¡&2Has sido teletransportado al warp '%warpname%'!");
+
+	    String string16 = "Teleport.Warp already exists";
+	    cfg.addDefault(string16, "¡&cEl Warp '%warpname%' ya existe!");
+
+	    String string18 = "Teleport.Warp does not exists";
+	    cfg.addDefault(string18, "¡&cEl Warp '%warpname%' no existe!");
+
+	    String string19 = "Teleport.Warp removed";
+	    cfg.addDefault(string19, "¡&6El Warp '%warpname%' ha sido borrado!");
+
+	    String string20 = "General.Command does not exists!";
+	    cfg.addDefault(string20, "¡&7El comando no existe! &a[%command%]");
+
+	    String string21 = "General.Reload.Before reload.Line 1";
+	    cfg.addDefault(string21, "¡&4Recarga empezada! ¡Es normal que haya un poco de lag!");
+
+	    String string22 = "General.Reload.Before reload.Line 2";
+	    cfg.addDefault(string22, "¡&cPorfavor, rellena la linea!");
+
+	    String string23 = "General.Reload.Before reload.Line 3";
+	    cfg.addDefault(string23, "¡&cPorfavor, rellena la linea!");
+
+	    String string24 = "General.Reload.Before reload.Line 4";
+	    cfg.addDefault(string24, "¡&cPorfavor, rellena la linea!");
+
+	    String string25 = "General.Reload.Before reload.Line 5";
+	    cfg.addDefault(string25, "¡&cPorfavor, rellena la linea!");
+
+	    String string26 = "General.Reload.After reload.Line 1";
+	    cfg.addDefault(string26, "¡&2Recarga terminada! ¡Ahora puedes jugar normal otra vez!");
+
+	    String string27 = "General.Reload.After reload.Line 2";
+	    cfg.addDefault(string27, "¡&cPorfavor, rellena la linea!");
+
+	    String string28 = "General.Reload.After reload.Line 3";
+	    cfg.addDefault(string28, "¡&cPorfavor, rellena la linea!");
+
+	    String string29 = "General.Reload.After reload.Line 4";
+	    cfg.addDefault(string29, "¡&cPorfavor, rellena la linea!");
+
+	    String string30 = "General.Reload.After reload.Line 5";
+	    cfg.addDefault(string30, "¡&cPorfavor, rellena la linea!");
+
+	    String string31 = "Teleport.Teleported to the Home";
+	    cfg.addDefault(string31, "&2Has sido teletransportado a la casa '%homename%'.");
+
+	    String string32 = "Teleport.Home does not exists";
+	    cfg.addDefault(string32, "¡&cLa casa '%homename%' no existe!");
+
+	    String string33 = "Teleport.Home removed";
+	    cfg.addDefault(string33, "¡&6La casa '%homename%' ha sido borrada!");
+
+	    String string36 = "Ban.Unbanmessage";
+	    cfg.addDefault(string36, "¡&6El jugador %player% ha sido desbaneado!");
+
+	    String string37 = "Ban.Not Banned";
+	    cfg.addDefault(string37, "¡&cEl jugador %player% no esta baneado!");
+
+	    String string38 = "Gamemode.Change";
+	    cfg.addDefault(string38, "¡&7Tu modo de juego ha sido cambiado a %gamemode%!");
+
+	    String string39 = "Gamemode.Change other";
+	    cfg.addDefault(string39, "¡&7Has cambiado el modo de juego de %player% a %gamemode%!");
+
+	    String string40 = "Gamemode.Is same as now";
+	    cfg.addDefault(string40, "¡&7El modo de juego &nno&r&7 ha sido cambiado a %gamemode%!");
+
+	    String string41 = "General.Healed";
+	    cfg.addDefault(string41, "¡&7Te has curado!");
+
+	    String string42 = "General.Heald Player";
+	    cfg.addDefault(string42, "¡&7Has curado a %player%!");
+
+	    String string43 = "General.Burned Player";
+	    cfg.addDefault(string43, "¡&7Has quemado a %player%!");
+
+	    String string44 = "Kick.Kick Broadcast";
+	    cfg.addDefault(string44, "¡&6El jugador &4&l%player%&r&6 fue echado del servidor por %kicker% por &4%reason%&6!");
+
+	    String string45 = "Nick.Changed";
+	    cfg.addDefault(string45, "&7Ahore su nombre es %nickname%.");
+	    
+	    String string46 = "MinigamesManager.Plugin deactivated";
+	    cfg.addDefault(string46, "¡&eEl plug-in es desactivado!");
+
+	    String string47 = "MinigamesManager.Infopoint deactivated";
+	    cfg.addDefault(string47, "¡&eEl &lInfopoint&r&e es desactivado!");
+
+	    String string48 = "MinigamesManager.Minigames-Teleportpunkt deactivated";
+	    cfg.addDefault(string48, "¡&eEl &lMinigamesspawn&r&e es desactivado!");
+	    
+	    String string62 = "MinigamesManager.Kompass deactivated";
+	    cfg.addDefault(string62, "¡&2La Minigames-Inventory es desactivado!");
+
+	    String string49 = "MinigamesManager.Teleport to the Infopoint";
+	    cfg.addDefault(string49, "¡&2Ha sido teletransportado a la Infopoint!");
+
+	    String string50 = "MinigamesManager.Teleport to the Minigames";
+	    cfg.addDefault(string50, "¡&2Ha sido teletransportado a los Minijuegos!");
+	    
+	    String string51 = "MinigamesManager.Teleport to Paintball";
+	    cfg.addDefault(string51, "¡&2Ha sido teletransportado a Paintball!");
+	    
+	    String string52 = "MinigamesManager.Teleport to Paintball War Edition";
+	    cfg.addDefault(string52, "¡&2Ha sido teletransportado a Paintball!");
+	    
+	    String string53 = "MinigamesManager.Teleport zu BlockHunt";
+	    cfg.addDefault(string53, "¡&2Ha sido teletransportado a BlockHunt!");
+	    
+	    String string54 = "MinigamesManager.Teleport to Quicksand";
+	    cfg.addDefault(string54, "¡&2Ha sido teletransportado a Quicksand!");
+	    
+	    String string55 = "MinigamesManager.Teleport to TNTRun";
+	    cfg.addDefault(string55, "¡&2Ha sido teletransportado a TNTRun!");
+	    
+	    String string56 = "MinigamesManager.Teleport zu PaintWar";
+	    cfg.addDefault(string56, "¡&2Ha sido teletransportado a PaintWar!");
+	    
+	    String string57 = "MinigamesManager.Teleport to HeavySpleef";
+	    cfg.addDefault(string57, "¡&2Ha sido teletransportado a HeavySpleef!");
+	    
+	    String string58 = "MinigamesManager.Teleport to SurvivalGames";
+	    cfg.addDefault(string58, "¡&2Ha sido teletransportado a SurvivalGames!");
+	    
+	    String string59 = "MinigamesManager.Teleport to HungarGames";
+	    cfg.addDefault(string59, "¡&2Ha sido teletransportado a HungarGames!");
+	    
+	    String string60 = "MinigamesManager.Teleport to Splegg";
+	    cfg.addDefault(string60, "¡&2Ha sido teletransportado a Splegg!");
+	    
+	    String string61 = "MinigamesManager.Teleport to Hot Potato";
+	    cfg.addDefault(string61, "¡&2Ha sido teletransportado a Hot Potato!");
+	    
+	    String string63 = "General.Security.Website and IP filter";
+	    cfg.addDefault(string63, "&4¡¡¡No le permiten escribir relaciones o Servidor IPs en la Charla!!!");
+	    
+	    String string64 = "Deathmessages.Cause.Entity.Kill";
+	    cfg.addDefault(string64, "&7¡%player% era matado del %entity%!");
+	    
+	    String string65 = "Deathmessages.Cause.Entity.Shoot";
+	    cfg.addDefault(string65, "&7¡%player% era fusilado del %shooter%!");
+	    
+	    String string66 = "Deathmessages.Cause.Entity.Explode";
+	    cfg.addDefault(string66, "&7¡%player% era cazado del %exploder% en el aire!");
+	    
+	    String string67 = "Deathmessages.Cause.Entity.Player";
+	    cfg.addDefault(string67, "&7¡%player% era matado de %killer%!");
+	    
+	    String string68 = "Deathmessages.Cause.Cactus";
+	    cfg.addDefault(string68, "&7¡%player% era ensartado por un cacto!");
+	    
+	    String string69 = "Deathmessages.Cause.Drowning";
+	    cfg.addDefault(string69, "&7%player% se ha ahogado.");
+	    
+	    String string70 = "Deathmessages.Cause.Fall";
+	    cfg.addDefault(string70, "&7%player% ha hamorido!");
+	    
+	    String string71 = "Deathmessages.Cause.Anvil";
+	    cfg.addDefault(string71, "&7¡%player% era machacado por un yunque!");
+	    
+	    String string72 = "Deathmessages.Cause.Fire";
+	    cfg.addDefault(string72, "&7%player% abrasaba!");
+	    
+	    String string73 = "Deathmessages.Cause.Lava";
+	    cfg.addDefault(string73, "&7%player% schmolz en lava!");
+	    
+	    String string74 = "Deathmessages.Cause.Lightning";
+	    cfg.addDefault(string74, "&7¡%player% era encontrado por un relámpago!");
+	    
+	    String string75 = "Deathmessages.Cause.Magic";
+	    cfg.addDefault(string75, "&7¡%player% era matado por magia!");
+	    
+	    String string76 = "Deathmessages.Cause.Poison";
+	    cfg.addDefault(string76, "&7¡%player% era intoxicado!");
+	    
+	    String string77 = "Deathmessages.Cause.Suffocation";
+	    cfg.addDefault(string77, "&7¡%player% ahogaba en un muro!");
+	    
+	    String string78 = "Deathmessages.Cause.Suicide";
+	    cfg.addDefault(string78, "&7¿Por qué has hecho ello, %player%?");
+	    
+	    String string79 = "Deathmessages.Cause.Thorns";
+	    cfg.addDefault(string79, "&7%player% corría en una coraza de espinas.");
+	    
+	    String string80 = "Deathmessages.Cause.Void";
+	    cfg.addDefault(string80, "&7%player% caía en el Nada!");
+	    
+	    String string81 = "Deathmessages.Cause.Withereffect";
+	    cfg.addDefault(string81, "&7%player% era contaminado por Wither!");
+	    
+	    String string82 = "General.FirstJoin.Line 1";
+	    cfg.addDefault(string82, "&aEl jugador &e%player% &ase afilió a este Servidor por primera vez.");
+	    
+	    String string83 = "General.FirstJoin.Line 2";
+	    cfg.addDefault(string83, "&aHolá, %player%!");
+	    
+	    cfg.options().copyDefaults(true);
+	    cfg.options().header("Esté es el archivo de mensajes de ServerManager. Puede cambiar los mensajes aquí. "
+	    		+ "\nColorCodes son con &");
+
+	    ServerManager.KeineRechte = ChatColor.translateAlternateColorCodes('&', cfg.getString(string1));
+	    
+	    try{cfg.save(new File("plugins/ServerManager/Languages", "es_ES.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");return;}
+	
+
+	}
+}

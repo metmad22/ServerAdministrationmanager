@@ -1,44 +1,44 @@
-package de.GamerWorld.SM.Commands;
+package me.ModMakerGroup.SM.Commands;
+
+import me.ModMakerGroup.SM.ServerManager;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.GamerWorld.SM.Main.Main;
-
-
 public class flyCommand implements CommandExecutor
 {
-	  Main plugin;
+	  ServerManager main;
 
-	  public flyCommand(Main plugin)
+	  public flyCommand(ServerManager sm)
 	  {
-	    this.plugin = plugin;
+	    this.main = sm;
 	  }
 
 	  @Override
 	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	  {
-	    if (cmd.getName().equalsIgnoreCase("fly")) {
-	      if (!(sender instanceof Player)) {
-	        sender.sendMessage(Main.prefix + Main.noPlayer);
-	        return true;
-	      }
-	      Player p = (Player)sender;
-	      if (!p.hasPermission("sm.fly")) {
-	        p.sendMessage(Main.prefix + Main.KeineRechte);
-	        return true;
-	      }else{
-
-	      if (p.getAllowFlight())
-	        p.setAllowFlight(false);
-	      else {
-	        p.setAllowFlight(true);
-	      }
-	    }
+		  if (cmd.getName().equalsIgnoreCase("fly")) {
+			  if (!(sender instanceof Player)) {
+				  sender.sendMessage(ServerManager.prefix + ServerManager.noPlayer);
+				  return true;
+			  }
+			  Player p = (Player)sender;
+			  if (!p.hasPermission("sm.fly")) {
+				  p.sendMessage(ServerManager.prefix + ServerManager.KeineRechte);
+				  return true;
+			  }else{
+				  if (p.getAllowFlight()) {
+					  p.setAllowFlight(false);
+					  p.sendMessage(ServerManager.prefixb + "§7You can now fly!");
+				  } else {
+					  p.setAllowFlight(true);
+					  p.sendMessage(ServerManager.prefixb + "§7You can´t now fly!");
+				  }
+			  }
 	    }
 	    return true;
 	  }
+}
 
-	}

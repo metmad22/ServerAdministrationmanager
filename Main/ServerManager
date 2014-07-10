@@ -1,0 +1,711 @@
+package me.ModMakerGroup.SM;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+import me.ModMakerGroup.SM.Commands.GodCommand;
+import me.ModMakerGroup.SM.Commands.backCommand;
+import me.ModMakerGroup.SM.Commands.banCommand;
+import me.ModMakerGroup.SM.Commands.bigtreeCommand;
+import me.ModMakerGroup.SM.Commands.bookCommand;
+import me.ModMakerGroup.SM.Commands.booksCommand;
+import me.ModMakerGroup.SM.Commands.broadcastCommand;
+import me.ModMakerGroup.SM.Commands.burnCommand;
+import me.ModMakerGroup.SM.Commands.ccCommand;
+import me.ModMakerGroup.SM.Commands.clearinvCommand;
+import me.ModMakerGroup.SM.Commands.createspawnmessageCommand;
+import me.ModMakerGroup.SM.Commands.enchantCommand;
+import me.ModMakerGroup.SM.Commands.feedCommand;
+import me.ModMakerGroup.SM.Commands.fireballCommand;
+import me.ModMakerGroup.SM.Commands.fireworkCommand;
+import me.ModMakerGroup.SM.Commands.flyCommand;
+import me.ModMakerGroup.SM.Commands.gamemodeCommand;
+import me.ModMakerGroup.SM.Commands.getposCommand;
+import me.ModMakerGroup.SM.Commands.giveCommand;
+import me.ModMakerGroup.SM.Commands.gmCommands;
+import me.ModMakerGroup.SM.Commands.hatCommand;
+import me.ModMakerGroup.SM.Commands.headCommand;
+import me.ModMakerGroup.SM.Commands.healCommand;
+import me.ModMakerGroup.SM.Commands.homeCommand;
+import me.ModMakerGroup.SM.Commands.hubCommand;
+import me.ModMakerGroup.SM.Commands.invseeCommand;
+import me.ModMakerGroup.SM.Commands.itemCommand;
+import me.ModMakerGroup.SM.Commands.kickCommand;
+import me.ModMakerGroup.SM.Commands.killCommand;
+import me.ModMakerGroup.SM.Commands.killallCommand;
+import me.ModMakerGroup.SM.Commands.kittycannonCommand;
+import me.ModMakerGroup.SM.Commands.msgCommand;
+import me.ModMakerGroup.SM.Commands.muteCommand;
+import me.ModMakerGroup.SM.Commands.nickCommand;
+import me.ModMakerGroup.SM.Commands.nukeCommand;
+import me.ModMakerGroup.SM.Commands.recipeCommand;
+import me.ModMakerGroup.SM.Commands.sethubCommand;
+import me.ModMakerGroup.SM.Commands.smCommand;
+import me.ModMakerGroup.SM.Commands.strikeCommand;
+import me.ModMakerGroup.SM.Commands.timeCommand;
+import me.ModMakerGroup.SM.Commands.topCommand;
+import me.ModMakerGroup.SM.Commands.tpCommand;
+import me.ModMakerGroup.SM.Commands.voteCommand;
+import me.ModMakerGroup.SM.Commands.warpCommand;
+import me.ModMakerGroup.SM.Commands.weatherCommand;
+import me.ModMakerGroup.SM.Commands.webCommand;
+import me.ModMakerGroup.SM.Events.ChatEvents;
+import me.ModMakerGroup.SM.Events.EntityEvents;
+import me.ModMakerGroup.SM.Events.InventoryEvents;
+import me.ModMakerGroup.SM.Events.PlayerEvents;
+import me.ModMakerGroup.SM.Listener.BadWordFilter;
+import me.ModMakerGroup.SM.Listener.Compass;
+import me.ModMakerGroup.SM.Listener.DeathManager;
+import me.ModMakerGroup.SM.Listener.EnderBarListener;
+import me.ModMakerGroup.SM.Listener.Hublauncher;
+import me.ModMakerGroup.SM.Listener.LampONListener;
+import me.ModMakerGroup.SM.Listener.MMCompass;
+import me.ModMakerGroup.SM.MinigamesManager.Commands.InfCommand;
+import me.ModMakerGroup.SM.MinigamesManager.Commands.InfpCommand;
+import me.ModMakerGroup.SM.MinigamesManager.Commands.mgmCommand;
+import me.ModMakerGroup.SM.MinigamesManager.Commands.minigamesCommand;
+import me.ModMakerGroup.SM.MinigamesManager.Events.SignEvents;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
+
+public class ServerManager extends JavaPlugin
+{
+	public static ServerManager main;
+	public static LanguageManager LM;
+	protected FileConfiguration config;
+	public static HashMap<String, Location> backdb = new HashMap<String, Location>();
+	public static String KeineRechte;
+	public static String prefix = "§4[§1SM§4]: ";
+	public static String prefixb = "§l§7[§4!§7]:§r ";
+	public static String noPlayer = "§4You have to be a Player to use this Command!";
+	public static String Playerdnx = "§4The Player is not online!";
+	public static String justPlayer = "§4The Console can´t use this command!!!";
+	public static String notenoughArgs = "§4Not enough arguments!";
+	public static String toomuchArgs = "§4Too much arguments!"; 
+	
+	public PluginDescriptionFile pdf = getDescription();
+	
+	public static String FeaName;  
+	public static String FeaLore;
+	public static Boolean Msa;
+	public static Boolean Ipa;
+	public static Boolean Koma;
+	public static Boolean Fes;
+	public static String KomName;
+	public static String KomPldeak;
+	public static String KomMini;
+	public static String KomInfp;
+	public static String KomPb;
+	public static String KomPWE;
+	public static String KomTeldeak;
+	public static String KomBH;
+	public static String KomQs;
+	public static String KomTR;
+	public static String KomPw;
+	public static String KomHS;
+	public static String KomSG;
+	public static String KomHG;
+	public static String KomSP;
+	public static String KomHP;
+	public static String KomLore;
+	public static String SignMgS1;
+	public static String SignMgS2;
+	public static String SignMgS3;
+	public static String SignMgS4; 
+	public static String SignInfp1;
+	public static String SignInfp2;
+	public static String SignInfp3;
+	public static String SignInfp4;
+	public static String filenex = "§4The Teleportpoint hasn´t been set until now! Please contact the Serverowner!";
+
+	public static ArrayList<String> blacklist = new ArrayList<String>();
+	
+	public void onEnable() {
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "--------------------------------------------------------");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "               ServerManager 7.0 BETA                  ");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "--------------------------------------------------------");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.YELLOW + "Starting Plugin...");
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.YELLOW + "Looking for BarAPI...");
+	    checkforBarAPI();
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.YELLOW + "Loading Events and Commands...");
+	    loadEvents();
+		installCommands();
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.YELLOW + "Loading Configs...");
+	    loadConfig();
+	    ServerManager.LM = new LanguageManager(this);
+	    if(this.getConfig().getString("General.Language").equals("en_EN")) {
+	    	LM.loadenEN();
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Enabled en_EN (English) Version!");
+	    } else if (this.getConfig().getString("General.Language").equals("de_DE")) {
+	    	LM.loaddeDE();
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Enabled de_DE (German) Version!");
+	    } else if (this.getConfig().getString("General.Language").equals("es_ES")) {
+	    	LM.loadesES();
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Enabled es_ES (Spanish) Version!");
+	    } else {
+	    	LM.loadenEN();
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.YELLOW + "Wrong Language! Changing to English (en_EN!)!");
+		    this.getConfig().getString("General.Language").replace(this.getConfig().getString("General.Language"), "en_EN");
+	    }
+	    if (this.getConfig().getBoolean("General.MinigamesManager enabled?") == true) {
+	    	loadMinigamesManager();
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Enabled MinigamesManager!");	
+	    } else {
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Disables MinigamesManager!");
+	    }
+	    loadCompass();
+	    loadBloodEffectConfig();
+	    loadBadWordScanner();
+	    loadspawnmessage();
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Configs loaded!");
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Plugin started! Have fun!");
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "--------------------------------------------------------");
+	}
+
+	public void onDisable() {
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "--------------------------------------------------------");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "               ServerManager 7.0 BETA                  ");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "--------------------------------------------------------");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.YELLOW + "Stopping Plugin...");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "Plugin stopped!");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Thank you for using our Plugin!");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "--------------------------------------------------------");
+	}
+	
+	public void loadMinigamesManager() {
+		loadMMConfig();
+		loadMMCommands();
+		loadMMEvents();
+	}
+	
+	public void checkforBarAPI() {
+		File BarAPIjar = new File("plugins/", "BarAPI.jar");
+		if (BarAPIjar.exists()) {
+			getServer().getPluginManager().registerEvents(new EnderBarListener(this), this);
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "BarAPI was found!");
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "You can use the Bossbar!");
+		    this.loadBossBarConfig();
+		} else {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "BarAPI was not found!");
+		    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "You can not use the BossBar!");
+		}
+	}
+	
+	public void	loadEvents() {
+		PluginManager PM = getServer().getPluginManager();
+		PM.registerEvents(new PlayerEvents(this), this);
+	    PM.registerEvents(new InventoryEvents(this), this);
+	    PM.registerEvents(new ChatEvents(this), this);
+	    PM.registerEvents(new MainManager(this), this);
+	    PM.registerEvents(new EntityEvents(this), this);
+	    PM.registerEvents(new Hublauncher(this), this);
+	    PM.registerEvents(new BadWordFilter(this), this);
+	    PM.registerEvents(new LampONListener(this), this);
+	    PM.registerEvents(new DeathManager(this), this);
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Events loaded!");
+	}
+	
+	public void	installCommands() {
+	    this.getCommand("back").setExecutor(new backCommand(this));
+	    this.getCommand("cc").setExecutor(new ccCommand(this));
+	    this.getCommand("clearinv").setExecutor(new clearinvCommand(this));
+	    this.getCommand("spawn").setExecutor(new hubCommand(this));
+	    this.getCommand("setspawn").setExecutor(new sethubCommand(this));
+	    this.getCommand("time").setExecutor(new timeCommand(this));
+	    this.getCommand("sm").setExecutor(new smCommand(this));
+	    this.getCommand("head").setExecutor(new headCommand(this));
+	    this.getCommand("warp").setExecutor(new warpCommand(this));
+	    this.getCommand("com").setExecutor(new Compass(this));
+	    this.getCommand("home").setExecutor(new homeCommand(this));
+	    this.getCommand("ban").setExecutor(new banCommand(this));
+	    this.getCommand("unban").setExecutor(new banCommand(this));
+	    this.getCommand("fly").setExecutor(new flyCommand(this));
+	    this.getCommand("gamemode").setExecutor(new gamemodeCommand(this));
+	    this.getCommand("gms").setExecutor(new gmCommands(this));
+	    this.getCommand("gmc").setExecutor(new gmCommands(this));
+	    this.getCommand("gma").setExecutor(new gmCommands(this));
+	    this.getCommand("firework").setExecutor(new fireworkCommand(this));
+	    this.getCommand("god").setExecutor(new GodCommand(this));
+	    this.getCommand("bigtree").setExecutor(new bigtreeCommand(this));
+	    this.getCommand("heal").setExecutor(new healCommand(this));
+	    this.getCommand("feed").setExecutor(new feedCommand(this));
+	    this.getCommand("broadcast").setExecutor(new broadcastCommand(this));
+	    this.getCommand("burn").setExecutor(new burnCommand(this));
+	    this.getCommand("hat").setExecutor(new hatCommand(this));
+	    this.getCommand("spawnbook").setExecutor(new bookCommand(this));
+	    this.getCommand("fireball").setExecutor(new fireballCommand(this));
+	    this.getCommand("book").setExecutor(new booksCommand(this));
+	    this.getCommand("getpos").setExecutor(new getposCommand(this));
+	    this.getCommand("invsee").setExecutor(new invseeCommand(this));
+	    this.getCommand("give").setExecutor(new giveCommand(this));
+	    this.getCommand("item").setExecutor(new itemCommand(this));
+	    this.getCommand("kick").setExecutor(new kickCommand(this));
+	    this.getCommand("tp").setExecutor(new tpCommand(this));
+	    this.getCommand("tpall").setExecutor(new tpCommand(this));
+	    this.getCommand("tphere").setExecutor(new tpCommand(this));
+	    this.getCommand("nick").setExecutor(new nickCommand(this));
+	    this.getCommand("enchant").setExecutor(new enchantCommand(this));
+	    this.getCommand("top").setExecutor(new topCommand(this));
+	    this.getCommand("weather").setExecutor(new weatherCommand(this));
+	    this.getCommand("sun").setExecutor(new weatherCommand(this));
+	    this.getCommand("rain").setExecutor(new weatherCommand(this));
+	    this.getCommand("storm").setExecutor(new weatherCommand(this));
+	    this.getCommand("kill").setExecutor(new killCommand(this));
+	    this.getCommand("killall").setExecutor(new killallCommand(this));
+	    this.getCommand("kittycanon").setExecutor(new kittycannonCommand(this));
+	    this.getCommand("strike").setExecutor(new strikeCommand(this));
+	    this.getCommand("msg").setExecutor(new msgCommand(this));
+	    this.getCommand("mute").setExecutor(new muteCommand(this));	  
+	    this.getCommand("nuke").setExecutor(new nukeCommand(this));
+	    this.getCommand("day").setExecutor(new timeCommand(this));
+	    this.getCommand("night").setExecutor(new timeCommand(this));
+	    this.getCommand("vote").setExecutor(new voteCommand(this));
+	    this.getCommand("web").setExecutor(new webCommand(this));
+	    this.getCommand("recipe").setExecutor(new recipeCommand(this));
+	    this.getCommand("createspawnmessage").setExecutor(new createspawnmessageCommand(this));
+	    this.getCommand("lighter").setExecutor(new LampONListener(this));
+	    Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.GREEN + "Commands loaded!");
+	}
+	
+	public void loadBadWordScanner() {
+		File filebw = new File(getDataFolder(), "blacklist.txt");
+		if (!filebw.exists()) {
+			filebw.getParentFile().mkdirs();
+			copy(getResource("blacklist.txt"), filebw);
+		}		
+		File file = new File(getDataFolder() + "\\blacklist.txt");
+		try {
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				ServerManager.blacklist.add(scanner.nextLine());
+			}
+			scanner.close();
+		}catch (FileNotFoundException e) {
+		      Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Scanner failed!");
+	    }
+	}
+	
+	private void copy(InputStream in, File file) {
+	    try {
+	        OutputStream out = new FileOutputStream(file);
+	        byte[] buf = new byte[1024];
+	        int len;
+	        while((len=in.read(buf))>0){
+	            out.write(buf,0,len);
+	        }
+	        out.close();
+	        in.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void loadBloodEffectConfig() {
+		File file = new File("plugins/ServerManager", "blood.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		//Save
+		try{cfg.save(new File("plugins/ServerManager", "blood.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File failed!");}
+		
+		cfg.addDefault("Bloodeffects.enabled?", Boolean.valueOf(true));		
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Zombie", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Skeleton", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Spider", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Blaze", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Creeper", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Ghast", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Magma Cube", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Silverfish", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Slime", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Witch", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Enderman", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Cave Spider", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Hostile Mobs.Zombie Pigman", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Chicken", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Cow", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Ocelot", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Pig", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Sheep", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Horse", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Squid", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Bat", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Villager", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Mooshroom", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Passive Mobs.Wolf", Integer.valueOf(152));		
+		cfg.addDefault("Bloodeffects.Utility Mobs.Snow Golem", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Utility Mobs.Iron Golem", Integer.valueOf(152));		
+		cfg.addDefault("Bloodeffects.Boss Mobs.Ender Dragon", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Boss Mobs.Wither", Integer.valueOf(152));		
+		cfg.addDefault("Bloodeffects.Custom Spawned Mobs.Giant", Integer.valueOf(152));
+		cfg.addDefault("Bloodeffects.Players.Player", Integer.valueOf(152));
+		
+		cfg.options().copyDefaults(true);
+		cfg.options().header("This is the Config for the Bloodefects for Mobs and Player!");
+		//Save
+		try{cfg.save(new File("plugins/ServerManager", "blood.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");}
+	}
+	
+	public void loadspawnmessage() {
+		File spawnmessage = new File ("plugins/ServerManager", "spawnmessage.yml");
+		YamlConfiguration cfgsm = YamlConfiguration.loadConfiguration(spawnmessage);
+		cfgsm.addDefault("SpawnMessage", new String [] {
+				"&bWelcome / Willkommen / Holá, %player%",
+				"&4to our Server %server%!",
+				"&4Today is %day% the %date%. It´s now %h%:%min%:%sec%",
+				"We are in %month%"
+		});
+		cfgsm.options().copyDefaults(true);
+		try {
+			cfgsm.save(spawnmessage);
+		} catch (IOException e) {}
+	}
+	
+	public void loadConfig() {
+		saveConfig();
+		//General
+		String stringlang = "General.Language";
+		getConfig().addDefault(stringlang, "en_EN");
+		
+		this.getConfig().addDefault("General.MinigamesManager enabled?", Boolean.valueOf(true));
+		
+		this.getConfig().addDefault("General.Security.Website and IP filter", Boolean.valueOf(true));
+		this.getConfig().addDefault("General.Security.Bad word filter.enabled", Boolean.valueOf(true));
+		String stringbwr = "General.Security.Bad word filter.replacement";
+		getConfig().addDefault(stringbwr, "&4*censored*&r");
+		
+		this.getConfig().addDefault("General.Compass activated?", Boolean.valueOf(true));
+		this.getConfig().addDefault("General.Compass.activate Spawn", Boolean.valueOf(true));
+		
+		this.getConfig().addDefault("General.Reload.Message Length before start", Integer.valueOf(1));		
+		this.getConfig().addDefault("General.Reload.Message Length after finish", Integer.valueOf(1));
+		
+		this.getConfig().addDefault("General.Respawn at home", Boolean.valueOf(true));
+				
+		String timezone = "General.Timezone";
+		getConfig().addDefault(timezone, "US/Pacific");
+		
+		this.getConfig().addDefault("General.Death-Message on?", Boolean.valueOf(true));
+		
+		this.getConfig().addDefault("General.Additional.BossBar.enable", Boolean.valueOf(true));
+		
+		//Chat
+		this.getConfig().addDefault("Chat.Colors in Chat activated?", Boolean.valueOf(true));
+		
+		this.getConfig().addDefault("Chat.Broadcast.Message Ban", Boolean.valueOf(true));
+		this.getConfig().addDefault("Chat.Broadcast.Message Kick", Boolean.valueOf(true));
+		
+		String string1 = "Chat.JoinMessages.Player";
+		getConfig().addDefault(string1, "[&2+&r]: &e%player%");		
+		String string2 = "Chat.JoinMessages.OP";
+		getConfig().addDefault(string2, "[&2+&r]: &e%player%");
+				
+		String string3 = "Chat.LeaveMessages.Player";
+		getConfig().addDefault(string3, "[&4-&r]: &e%player%");	
+		String string4 = "Chat.LeaveMessages.OP";
+		getConfig().addDefault(string4, "[&4-&r]: &e%player%");
+		
+		//Items
+		this.getConfig().addDefault("Item.default-stack-size", Integer.valueOf(64));
+		
+		this.getConfig().addDefault("Item.drop extra item", Boolean.valueOf(true));
+		
+		//Vote	    
+	    String string6 = "Vote.Link";
+	    getConfig().addDefault(string6, "(insert your link here!)");
+	    
+	    String string7 = "Vote.Reward";
+	    getConfig().addDefault(string7, "(insert your votereward here!)");		
+	    
+	    //Web
+	    String string8 = "Web.Website";
+	    getConfig().addDefault(string8, "(insert your website link here!)");
+	    
+	    String string9 = "Web.Map";
+	    getConfig().addDefault(string9, "(insert your map link here!)");
+	    
+	    String string10 = "Web.Forum";
+	    getConfig().addDefault(string10, "(insert your forum link here!)");
+	    
+	    String string11 = "Web.E-Mail";
+	    getConfig().addDefault(string11, "(insert your e-mail address here!)");
+		
+	    //Hublauncher
+	    this.getConfig().addDefault("Hublauncher.Block-ID", Integer.valueOf(152));
+	    this.getConfig().addDefault("Hublauncher.Plate-ID", Integer.valueOf(147));
+	    
+	    String string12 = "Hublauncher.Sound";
+	    getConfig().addDefault(string12, "BAT_TAKEOFF");
+	    
+	    String string13 = "Hublauncher.Effect";
+	    getConfig().addDefault(string13, "ENDER_SIGNAL");
+	    	       
+		getConfig().options().copyDefaults(true);
+		getConfig().options().header("This is the General Config of ServerManager! "
+				+ "\nAt the point Reload, just fill in the value of 1 to 5!"
+				+ "\nYou can find more Timezones on: http://dev.bukkit.org/bukkit-plugins/manage-your-server/pages/documentation/timezones/"
+				+ "\nThank you for using ServerAdministrationManager by Minecraftair and metmad22!");
+	    saveConfig();
+		
+	}
+	
+	public void loadBossBarConfig() {
+		File file = new File("plugins/ServerManager/Additional", "BossBar.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);		
+		try { cfg.save(new File("plugins/ServerManager/Additional", "BossBar.yml")); } catch (IOException e) { System.out.println("[ServerManager][Error]: Saving of File faild!!!");}
+		
+		cfg.addDefault("General.Delay", Integer.valueOf(10));
+		cfg.addDefault("Messages", new String [] {
+				"&aWelcome to our server, %player%!",
+				"&aHolá, %player%!",
+				"&aWillkommen auf unserem Server, %player%",
+				"&4Have fun on %server%!",
+				"&e%date%, &7%h%:%min%:%sec%, &6%day% in %month%"
+		});
+		
+		cfg.options().copyDefaults(true);
+		cfg.options().header("This is the config for the BossBar!"
+				+ "\nThe Dealy is in seconds!"
+				+ "\nAdd messages like in the example or there will be errors"
+				+ "\nYou have to install BarAPI!"
+				+ "\nYou can use following variables:"
+				+ "\n%player% - for the Playername who joined; %server% - for the ServerName; "
+				+ "\n%h% - for the current hour; %min% - for the current minute; %sec% - for the corrent second;"
+				+ "\n%date% - for the whole date; %month% - for the month; %day% - for the day (Monday, ...)");
+		try { cfg.save(new File("plugins/ServerManager/Additional", "BossBar.yml")); } catch (IOException e) { System.out.println("[ServerManager][Error]: Saving of File faild!!!");}
+	}
+		
+	public void loadCompass() {
+		File file = new File("plugins/ServerManager/Teleportation", "compass.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+		try {
+			cfg.save(new File("plugins/ServerManager/Teleportation", "compass.yml"));
+		} catch (IOException e) {
+			System.out.println("[ServerManager]: Saving of Compass faild!!!");
+			e.printStackTrace();
+		}
+		
+		cfg.addDefault("Compass.Teleportpoints.Hub.activated?", Boolean.valueOf(true));	
+		
+		cfg.addDefault("Compass.default.Fill empty fields?", Boolean.valueOf(true));
+		
+		String string = "Compass.Teleportpoints.Hub.Name";
+		cfg.addDefault(string, "&4&lHub");
+		
+		String stringhl = "Compass.Teleportpoints.Hub.Lore";
+		cfg.addDefault(stringhl, "&5Klick to teleport to the Hub!");
+		
+		cfg.addDefault("Compass.Teleportpoints.Hall of Fame.activated?", Boolean.valueOf(true));
+		
+		String string2 = "Compass.Teleportpoints.Hall of Fame.Name";
+		cfg.addDefault(string2, "&b&lHall of Fame");
+		
+		String string3 = "Compass.Teleportpoints.Hall of Fame.Lore";
+		cfg.addDefault(string3, "&5Klick to teleport to the Hall of Fame!");
+		
+		String stringKN = "Compass.default.Name";
+		cfg.addDefault(stringKN, "&8Where do you want to go?");
+				
+		String string1 = "Compass.Item.Name";
+		cfg.addDefault(string1, "&6Teleporter");
+		
+		String string4 = "Compass.Item.Lore";
+		cfg.addDefault(string4, "&5Open the Teleport-Inventory!");
+		
+		cfg.options().copyDefaults(true);
+	    cfg.options().header("This is Config for the Teleportcompass. The ColorCodes are with &");	    
+
+	    try {
+			cfg.save(new File("plugins/ServerManager/Teleportation", "compass.yml"));
+		} catch (IOException e) {
+			System.out.println("[ServerManager]: Saving of Compass faild!!!");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void loadMMCommands() {	
+		this.getCommand("mgmtel").setExecutor(new MMCompass(this));
+		this.getCommand("mgm").setExecutor(new mgmCommand(this));
+		this.getCommand("minigames").setExecutor(new minigamesCommand(this));
+		this.getCommand("Infp").setExecutor(new InfpCommand(this));
+		this.getCommand("inf").setExecutor(new InfCommand(this));
+	}
+
+	public void loadMMEvents() {
+	  PluginManager pm = this.getServer().getPluginManager();
+	  pm.registerEvents(new SignEvents(this), this);	
+	}
+	
+	public void loadMMConfig() {
+		File file = new File("plugins/ServerManager/MinigamesManager", "MinigamesManager.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);		
+		
+		try{cfg.save(new File("plugins/ServerManager/MinigamesManager", "MinigamesManager.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");}
+
+		cfg.addDefault("Config.Plugins.Paintball", Boolean.valueOf(true));
+
+		cfg.addDefault("Config.Plugins.Paintball War Edition", Boolean.valueOf(true));
+
+		cfg.addDefault("Config.Plugins.BlockHunt", Boolean.valueOf(true));
+
+		cfg.addDefault("Config.Plugins.Quicksand", Boolean.valueOf(true));
+
+		cfg.addDefault("Config.Plugins.TNTRun", Boolean.valueOf(true));
+
+		cfg.addDefault("Config.Plugins.PaintWar", Boolean.valueOf(true));
+
+		cfg.addDefault("Config.Teleport.Minigamesspawn activated", Boolean.valueOf(true));
+	    Msa = cfg.getBoolean("Config.Teleport.Minigamesspawn activated");
+	    
+	    cfg.addDefault("Config.Teleport.Infopoint activated", Boolean.valueOf(true));
+	    Ipa = cfg.getBoolean("Config.Teleport.Infopoint activated");
+	    
+	    cfg.addDefault("Config.Teleport.Compass.Compass activated", Boolean.valueOf(true));
+	    Koma = cfg.getBoolean("Config.Teleport.Compass.Compass activated");
+	    
+	    cfg.addDefault("Config.Teleport.Compass.Fill empty spaces", Boolean.valueOf(true));
+	    Fes = cfg.getBoolean("Config.Teleport.Compass.Fill empty spaces");
+	    
+	    String string8 = "Config.Teleport.Compass.Compassname";
+	    cfg.addDefault(string8, "&lMinigames");
+	        
+	    String stringc = "Config.Teleport.Compass.Lore";
+	    cfg.addDefault(stringc, "&5Click to teleport!");
+	        
+	    String string30 = "Config.Teleport.Compass.Item.Name";
+	    cfg.addDefault(string30, "&6&lMinigames");
+	    
+	    String string31 = "Config.Teleport.Compass.Item.Lore";
+	    cfg.addDefault(string31, "&5Open the Minigames-Inventory");
+	    
+	    String stringa = "Config.Teleport.Compass.Plugin deactivated";
+	    cfg.addDefault(stringa, "&4Plugin deaktiviert!");
+	    
+	    String stringb = "Config.Teleport.Compass.Teleportpunkt deactivated";
+	    cfg.addDefault(stringb, "&4Teleport deaktiviert!");
+	    
+	    String string9 = "Config.Teleport.Compass.Minigamesspawn";
+	    cfg.addDefault(string9, "&6&lMinigamesspawn");
+	    
+	    String string10 = "Config.Teleport.Compass.Infopoint";
+	    cfg.addDefault(string10, "&6&lInfopoint");
+	       
+	    String string11 = "Config.Teleport.Compass.Paintball";
+	    cfg.addDefault(string11, "&f&lPaintball");
+	    
+	    String string12 = "Config.Teleport.Compass.Paintball War Edition";
+	    cfg.addDefault(string12, "&f&lPaintball War Edition");
+	    
+	    String string13 = "Config.Teleport.Compass.BlockHunt";
+	    cfg.addDefault(string13, "&9&lBlockHunt");
+	    
+	    String string14 = "Config.Teleport.Compass.Quicksand";
+	    cfg.addDefault(string14, "&e&lQuicksand");
+	    
+	    String string15 = "Config.Teleport.Compass.TNTRun";
+	    cfg.addDefault(string15, "&4&lTNTRun");
+	    
+	    String string16 = "Config.Teleport.Compass.PaintWar";
+	    cfg.addDefault(string16, "&1&lPaintWar");
+	    
+	    String string17 = "Config.Teleport.Compass.HeavySpleef";
+	    cfg.addDefault(string17, "&f&lSpleef");
+	    
+	    String string18 = "Config.Teleport.Compass.SurvivalGames";
+	    cfg.addDefault(string18, "&7&lSurvivalGames");
+	    
+	    String string19 = "Config.Teleport.Compass.HungarGames";
+	    cfg.addDefault(string19, "&8&lHungarGames");   
+
+	    String string20 = "Config.Teleport.Compass.Splegg";
+	    cfg.addDefault(string20, "&b&lSplegg");
+	    
+	    String string21 = "Config.Teleport.Compass.Hot Potato";
+	    cfg.addDefault(string21, "&e&lHot Potato");
+	    
+	    String string22 = "Config.Teleport.Signs.Minigamesspawn.Line 1";
+	    cfg.addDefault(string22, "&9[MGM]");
+	    
+	    String string23 = "Config.Teleport.Signs.Minigamesspawn.Line 2";
+	    cfg.addDefault(string23, "&6To the");
+	    
+	    String string24 = "Config.Teleport.Signs.Minigamesspawn.Line 3";
+	    cfg.addDefault(string24, "&cMinigames");
+	    
+	    String string25 = "Config.Teleport.Signs.Minigamesspawn.Line 4";
+	    cfg.addDefault(string25, "&a[Click me!]");
+	    
+	    String string26 = "Config.Teleport.Signs.Infopoint.Line 1";
+	    cfg.addDefault(string26, "&9[MGM]");
+	    
+	    String string27 = "Config.Teleport.Signs.Infopoint.Line 2";
+	    cfg.addDefault(string27, "&6To the");   
+	    
+	    String string28 = "Config.Teleport.Signs.Infopoint.Line 3";
+	    cfg.addDefault(string28, "&cInfopoint");
+	    
+	    String string29 = "Config.Teleport.Signs.Infopoint.Line 4";
+	    cfg.addDefault(string29, "&a[Click me!]");
+	    
+	    
+
+	    
+	    cfg.addDefault("Config.Plugins.HeavySpleef", Boolean.valueOf(true));
+
+	    cfg.addDefault("Config.Plugins.SurvivalGames", Boolean.valueOf(true));
+
+	    cfg.addDefault("Config.Plugins.Hungargames", Boolean.valueOf(true));
+	    
+	    cfg.addDefault("Config.Plugins.Splegg", Boolean.valueOf(true));
+
+	    cfg.addDefault("Config.Plugins.Hot Potato", Boolean.valueOf(true));
+	    
+	    KomName = ChatColor.translateAlternateColorCodes('&', cfg.getString(string8));
+	    KomMini = ChatColor.translateAlternateColorCodes('&', cfg.getString(string9));
+	    KomInfp = ChatColor.translateAlternateColorCodes('&', cfg.getString(string10));
+	    KomPb = ChatColor.translateAlternateColorCodes('&', cfg.getString(string11));
+	    KomPWE = ChatColor.translateAlternateColorCodes('&', cfg.getString(string12));
+	    KomPldeak = ChatColor.translateAlternateColorCodes('&', cfg.getString(stringa));
+	    KomBH = ChatColor.translateAlternateColorCodes('&', cfg.getString(string13));
+	    KomQs = ChatColor.translateAlternateColorCodes('&', cfg.getString(string14));
+	    KomTeldeak = ChatColor.translateAlternateColorCodes('&', cfg.getString(stringb));
+	    KomTR = ChatColor.translateAlternateColorCodes('&', cfg.getString(string15));
+	    KomPw = ChatColor.translateAlternateColorCodes('&', cfg.getString(string16));
+	    KomHS = ChatColor.translateAlternateColorCodes('&', cfg.getString(string17));
+	    KomSG = ChatColor.translateAlternateColorCodes('&', cfg.getString(string18));
+	    KomHG = ChatColor.translateAlternateColorCodes('&', cfg.getString(string19));
+	    KomSP = ChatColor.translateAlternateColorCodes('&', cfg.getString(string20));
+	    KomHP = ChatColor.translateAlternateColorCodes('&', cfg.getString(string21));
+	    KomLore = ChatColor.translateAlternateColorCodes('&', cfg.getString(stringc));
+	    
+	    SignMgS1 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string22)); 
+	    SignMgS2 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string23));
+	    SignMgS3 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string24));
+	    SignMgS4 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string25));
+	    SignInfp1 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string26));
+	    SignInfp2 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string27));
+	    SignInfp3 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string28));
+	    SignInfp4 = ChatColor.translateAlternateColorCodes('&', cfg.getString(string29));
+	    
+	    FeaName = ChatColor.translateAlternateColorCodes('&', cfg.getString(string30));
+	    FeaLore = ChatColor.translateAlternateColorCodes('&', cfg.getString(string31));
+	    cfg.options().copyDefaults(true);
+		
+	    try{cfg.save(new File("plugins/ServerManager/MinigamesManager", "MinigamesManager.yml"));} catch (IOException e) {Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_BLUE + "ServerManager" + ChatColor.DARK_RED + "]: " + ChatColor.RED + "[ERROR!!!]: Saving of File faild!");}
+	}
+}

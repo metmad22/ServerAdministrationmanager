@@ -1,0 +1,102 @@
+package me.ModMakerGroup.SM;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import org.bukkit.Location;
+import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+
+public enum MobManager
+{
+  OCELOT("Ocelot", Enemies.NEUTRAL, EntityType.OCELOT); 
+
+  public static final Logger logger;
+  public String suffix = "s";
+  public final String name;
+  public final Enemies type;
+  private final EntityType bukkitType;
+  private static final Map<String, MobManager> hashMap;
+  private static final Map<EntityType, MobManager> bukkitMap;
+
+  private MobManager(String n, Enemies en, String s, EntityType type) { this.suffix = s;
+    this.name = n;
+    this.type = en;
+    this.bukkitType = type;
+  }
+
+  private MobManager(String n, Enemies en, EntityType type)
+  {
+    this.name = n;
+    this.type = en;
+    this.bukkitType = type;
+  }
+
+  public static Set<String> getMobList()
+  {
+    return Collections.unmodifiableSet(hashMap.keySet());
+  }
+
+  public Entity spawn(World world, Server server, Location loc) throws MobManager.MobException
+  {
+    Entity entity = world.spawn(loc, this.bukkitType.getEntityClass());
+    if (entity == null)
+    {
+      throw new MobException();
+    }
+    return entity;
+  }
+
+  public EntityType getType()
+  {
+    return this.bukkitType;
+  }
+
+  public static MobManager fromName(String name)
+  {
+    return (MobManager)hashMap.get(name.toLowerCase(Locale.ENGLISH));
+  }
+
+  public static MobManager fromBukkitType(EntityType type)
+  {
+    return (MobManager)bukkitMap.get(type);
+  }
+
+  static
+  {
+    logger = Logger.getLogger("Minecraft");
+
+    hashMap = new HashMap<String, MobManager>();
+    bukkitMap = new HashMap<EntityType, MobManager>();
+
+    for (MobManager mob : values())
+    {
+      hashMap.put(mob.name.toLowerCase(Locale.ENGLISH), mob);
+      bukkitMap.put(mob.bukkitType, mob);
+    }
+  }
+
+  public static class MobException extends Exception
+  {
+    private static final long serialVersionUID = 1L;
+  }
+
+  public static enum Enemies
+  {
+    FRIENDLY("friendly"), 
+    NEUTRAL("neutral"), 
+    ENEMY("enemy");
+
+    protected final String type;
+
+    private Enemies(String type) { this.type = type; }
+
+  }
+}
+

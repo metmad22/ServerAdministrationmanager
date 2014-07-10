@@ -1,6 +1,8 @@
-package de.GamerWorld.SM.Commands;
+package me.ModMakerGroup.SM.Commands;
 
 import java.io.File;
+
+import me.ModMakerGroup.SM.ServerManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,92 +14,72 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import de.GamerWorld.SM.Main.Main;
-
 public class banCommand implements CommandExecutor{
 
-	  Main plugin;
-
-	  public banCommand(Main plugin)
+	  ServerManager main;
+	  public banCommand(ServerManager plugin)
 	  {
-	    this.plugin = plugin;
+	    this.main = plugin;
 	  }
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("ban")) {
 			if (cs instanceof Player) {
 				Player p = (Player)cs;
 				if ((p != null) && (!p.hasPermission("sm.ban"))) {
-					p.sendMessage("§4[§1SM§4]: " + Main.KeineRechte);
-				}
-			}else{
-		    if (args.length > 0) {
-		          OfflinePlayer target = Bukkit.getPlayer(args[0]);
-		          Player otarget = Bukkit.getPlayer(args[0]);
-		          if (target != null) {
-		            if (args.length > 1) {
-		              String ban = "";
-		              for (String s : args) {
-		                if (!s.equals(args[0])) {
-		                  if (s.equals(args[1])) {
-		                	s = ChatColor.translateAlternateColorCodes('&', ban);
-		                    ban = ban + s;
-		                  }
-		                  else {
-		                    ban = ban + " " + s;
-		                  }
-		                }
-		              }
-		              target.setBanned(true);
-		              if (otarget != null) {
-		                otarget.kickPlayer(ban);
-		              }
-		              if (this.plugin.getConfig().getBoolean("Config.default.Broadcast message ban", true)) {
-		            	  File file = new File("plugins/ServerManager", "messages.yml");
-		          		  FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-		            	  String banmsg = cfg.getString("messages.default.Ban Broadcast");
-		            	  banmsg = ChatColor.translateAlternateColorCodes('&', banmsg);
-		            	  banmsg = banmsg.replace("%player%", (CharSequence) target.getName());
-		            	  banmsg = banmsg.replace("%reason%", ban);
-		            	  banmsg = banmsg.replace("%banner%", cs.getName());
-		            	  Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + banmsg);
+					p.sendMessage("§4[§1SM§4]: " + ServerManager.KeineRechte);
+					return true;
+				}else{
+					if (args.length > 0) {
+						OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+						Player otarget = Bukkit.getPlayer(args[0]);
+							if (target != null) {
+								if (args.length == 2) {
+									String ban = args[1];
+									target.setBanned(true);
+										if (otarget != null) {
+											otarget.kickPlayer(ban);
+										}
+		              if (this.main.getConfig().getBoolean("General.Broadcast message ban", true)) {
+		            	  Bukkit.broadcastMessage("§l§7[§4!§7]: §r§4" + target.getName() + " was banned by " + cs.getName() + "!");
+		            	  Bukkit.broadcastMessage("§l§7[§4!§7]: §r§4Reason: " + ban);
 
 		              }		                
 		            } else {
-		              target.setBanned(true);
-	            	  File file = new File("plugins/ServerManager", "messages.yml");
-	          		  FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-	            	  String banmsg = cfg.getString("messages.default.Default Ban Reason");
-	            	  banmsg = ChatColor.translateAlternateColorCodes('&', banmsg);		              
+		              target.setBanned(true);	              
 	            	  if (otarget != null) {
-		                otarget.kickPlayer(banmsg);
+		                otarget.kickPlayer("Banned from the server!");
 		              }
-		              if (this.plugin.getConfig().getBoolean("Config.default.Broadcast message ban", true)) {
-		            	  String banmsgo = cfg.getString("messages.default.Ban Broadcast");
-		            	  banmsgo = ChatColor.translateAlternateColorCodes('&', banmsg);
-		            	  banmsgo = banmsgo.replace("%player%", (CharSequence) target.getName());
-		            	  banmsgo = banmsgo.replace("%reason%", banmsg);
-		            	  banmsgo = banmsgo.replace("%banner%", cs.getName());
-		            	  Bukkit.broadcastMessage("§l§7[§4!§7]:§r " + banmsgo);	
+	            	  Bukkit.broadcastMessage("§l§7[§4!§7]: §r§4" + target.getName() + " was banned by " + cs.getName() + "!");
 		             }
 		          }
 		            return true;
+		          }else{
+			          cs.sendMessage("§l§7[§4!§7]:§r The Player was not found!");
+			          return true;
 		          }
-		          cs.sendMessage("§l§7[§4!§7]:§r The Player was not found!");
-		          return true;
-		    }
+				}
 			}
+			
 		}
 		if (cmd.getName().equalsIgnoreCase("unban")) {
-			File file = new File("plugins/ServerManager", "messages.yml");
-    		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-    		  if ((cs instanceof Player)) {
+			File file = null;
+	    	if (main.getConfig().getString("General.Language").equals("en_EN")) {
+	    		file = new File("plugins/ServerManager/Languages", "en_EN.yml");
+	    	} else if (main.getConfig().getString("General.Language").equals("de_DE")) {
+	    		file = new File("plugins/ServerManager/Languages", "de_DE.yml");
+	    	} else if (main.getConfig().getString("General.Language").equals("es_ES")) {
+	    		file = new File("plugins/ServerManager/Languages", "es_ES.yml");
+	    	}
+	    	FileConfiguration cfgm = YamlConfiguration.loadConfiguration(file);	    	
+	    	if ((cs instanceof Player)) {
 		          Player p = (Player)cs;
 		          if ((p != null) && (!p.hasPermission("sm.unban"))) {
-						p.sendMessage("§4[§1SM§4]: " + Main.KeineRechte);
-					}
-		        }else{
+		        	  p.sendMessage("§4[§1SM§4]: " + ServerManager.KeineRechte);
+		        	  return true;
+					}else{
 		        if (args.length > 0) {
 		          OfflinePlayer target = Bukkit.getPlayer(args[0]);
 		          if (target == null) {
@@ -106,16 +88,16 @@ public class banCommand implements CommandExecutor{
 
 		          if (target != null) {
 		            if (target.isBanned()) {
-		              target.setBanned(false);
-		              String unban = cfg.getString("messages.default.Unbanmessage");
-		              unban = ChatColor.translateAlternateColorCodes('&', unban);
-		              unban = unban.replace("%player%", target.getName());
-		              cs.sendMessage(Main.prefixb + unban);
+		            	target.setBanned(false);
+		                String unban = cfgm.getString("Ban.Unbanmessage");
+		                unban = ChatColor.translateAlternateColorCodes('&', unban);
+		                unban = unban.replace("%player%", target.getName());
+		                cs.sendMessage(ServerManager.prefixb + unban);
 		            } else {
-		            	String nB = cfg.getString("messages.Ban.Not Banned");
-		            	nB = ChatColor.translateAlternateColorCodes('&', nB);
-		            	nB = nB.replace("%player%", target.getName());
-		              cs.sendMessage(Main.prefixb + nB);
+		                String nB = cfgm.getString("Ban.Not Banned");
+		                nB = ChatColor.translateAlternateColorCodes('&', nB);
+		                nB = nB.replace("%player%", target.getName());
+		                cs.sendMessage(ServerManager.prefixb + nB);
 		            }
 		            return true;
 		          }
@@ -123,6 +105,7 @@ public class banCommand implements CommandExecutor{
 		          return true;
 		        }
 		    }
+		}
 		}
 		return true;
 	}
